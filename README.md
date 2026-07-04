@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TEK at UMass Amherst
 
-## Getting Started
+Official website for **TEK (Technology, Empowerment, & Kinship)**  -  the first professional and social technology community at UMass Amherst.
 
-First, run the development server:
+> Technology is better when built together.
+
+## Stack
+
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Lucide Icons
+- Resend + Server Actions (contact form)
+- Zod validation
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local` and fill in values:
 
-## Learn More
+| Variable | Description |
+| --- | --- |
+| `RESEND_API_KEY` | Resend API key for contact form delivery |
+| `CONTACT_TO_EMAIL` | Inbox for form submissions |
+| `CONTACT_FROM_EMAIL` | Verified Resend sender |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site URL for SEO metadata |
 
-To learn more about Next.js, take a look at the following resources:
+Without `RESEND_API_KEY`, the contact form still validates and shows success (submissions are logged server-side) so local development works out of the box.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+  app/                 # Routes (App Router pages)
+  components/
+    ui/                # Base UI primitives
+    layout/            # Navbar, footer
+    shared/            # Reusable section components
+    home/              # Homepage sections
+    contact/           # Contact form
+    community/         # Community page components
+    events/            # Events filtering
+    resources/         # Resources page components
+  lib/
+    data/              # Content & copy (easy for officers to update)
+    actions/           # Server actions
+    validations/       # Zod schemas
+public/logos/          # Brand assets
+```
 
-## Deploy on Vercel
+## Updating content
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Most copy and listings live in `src/lib/data/`. Future officers can update events, board members, stats, and FAQs there without touching layout code.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Deploy on [Vercel](https://vercel.com). Add the environment variables in the project settings, then connect the repository.

@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /* Logo images use plain <img> tags with direct URLs */
 };
 
 export default nextConfig;

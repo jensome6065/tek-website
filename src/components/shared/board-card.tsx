@@ -1,0 +1,78 @@
+"use client";
+
+import { Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import type { BoardMember } from "@/lib/data/board";
+import { LinkedInIcon } from "@/components/ui/icons";
+import { cn } from "@/lib/utils";
+
+interface BoardCardProps {
+  member: BoardMember;
+  index?: number;
+}
+
+export function BoardCard({ member, index = 0 }: BoardCardProps) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.06,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="group relative overflow-hidden rounded-2xl bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated"
+    >
+      <div
+        className={cn(
+          "flex h-56 items-center justify-center bg-gradient-to-br transition-transform duration-500 group-hover:scale-105",
+          member.accent
+        )}
+      >
+        <span className="text-5xl font-semibold tracking-tight text-white/90">
+          {member.initials}
+        </span>
+      </div>
+      <div className="p-6">
+        <h3 className="text-xl font-semibold tracking-tight text-dark-neutral">
+          {member.name}
+        </h3>
+        <p className="mt-1 text-sm font-medium text-maroon">{member.role}</p>
+        <p className="mt-1 text-sm text-muted">{member.major}</p>
+
+        <div className="mt-4 space-y-3 border-t border-border pt-4 text-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-sm:opacity-100">
+          <div>
+            <p className="text-muted">Favorite technology</p>
+            <p className="font-medium text-dark-neutral">{member.favoriteTech}</p>
+          </div>
+          <div>
+            <p className="text-muted">Favorite TEK memory</p>
+            <p className="font-medium text-dark-neutral leading-relaxed">
+              {member.favoriteMemory}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-5 flex gap-3">
+          <a
+            href={member.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-background-warm text-dark-blue transition-colors hover:bg-light-blue/30"
+            aria-label={`${member.name} on LinkedIn`}
+          >
+            <LinkedInIcon className="h-4 w-4" />
+          </a>
+          <a
+            href={`mailto:${member.email}`}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-background-warm text-dark-blue transition-colors hover:bg-light-blue/30"
+            aria-label={`Email ${member.name}`}
+          >
+            <Mail className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
