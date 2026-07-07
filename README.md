@@ -2,7 +2,7 @@
 
 Official website for **TEK (Technology, Empowerment, & Kinship)**  -  the first professional and social technology community at UMass Amherst.
 
-> Technology is better when built together.
+> Let's redefine tech culture.
 
 ## Stack
 
