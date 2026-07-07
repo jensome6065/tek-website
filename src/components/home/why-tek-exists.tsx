@@ -37,8 +37,8 @@ export function WhyTekExists() {
 
         <AnimatedReveal delay={0.1} className="mt-10 max-w-4xl">
           <blockquote className="text-2xl font-semibold leading-snug tracking-tight text-dark-blue sm:text-3xl lg:text-4xl lg:leading-tight">
-            &ldquo;Too often, technology communities ask students to compete. We
-            built one that helps them belong.&rdquo;
+            Too often, technology communities ask students to compete. We
+            built one that helps them belong.
           </blockquote>
         </AnimatedReveal>
 

@@ -32,37 +32,31 @@ export const vision =
 
 export const milestones = [
   {
-    year: "2023",
+    year: "APR 2025",
     title: "TEK is founded",
     description:
       "A small group of students comes together with a simple belief: technology is better when built together.",
   },
   {
-    year: "2023",
+    year: "SEP 2025",
     title: "First community events",
     description:
       "Study nights, coffee chats, and project build nights establish the rhythm of TEK life.",
   },
   {
-    year: "2024",
+    year: "OCT 2025",
     title: "Professional programming launches",
     description:
       "Resume workshops, mock interviews, and alumni mentorship become core offerings.",
   },
   {
-    year: "2024",
-    title: "First company partnerships",
-    description:
-      "Sponsors and recruiters begin engaging with TEK members through events and visits.",
-  },
-  {
-    year: "2025",
+    year: "MAR 2026",
     title: "Community expands",
     description:
       "Membership grows across majors - engineers, designers, PMs, and founders finding a shared home.",
   },
   {
-    year: "2026",
+    year: "SEP 2026",
     title: "Looking ahead",
     description:
       "Deeper alumni networks, stronger partnerships, and a lasting culture of belonging at UMass.",

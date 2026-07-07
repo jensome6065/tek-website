@@ -299,10 +299,10 @@ export const featuredCompanies: FeaturedCompany[] = [
     opportunities: "Internships & full-time",
   },
   {
-    id: "fanz",
-    name: "FanZ",
+    id: "sportsmedia",
+    name: "Sports Media Inc.",
     logoUrl:
-      "https://esportspod.gg/wp-content/uploads/2021/12/Picture1.png",
+      "https://sportsmedia.net/images/_logo_SportsMedia.png",
     opportunities: "Internships",
   },
   {
@@ -318,5 +318,19 @@ export const featuredCompanies: FeaturedCompany[] = [
     logoUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/960px-Amazon_logo.svg.png",
     opportunities: "Internships & full-time",
+  },
+  {
+    id: "hkust",
+    name: "HKUST Fok Ying Tung Research Institute",
+    logoUrl:
+      "https://media.licdn.com/dms/image/v2/C4E0BAQF112KADbCqJw/company-logo_200_200/company-logo_200_200/0/1631317279216?e=1784764800&v=beta&t=oUWM6VYzW3AtUfl8yDEGO3TQ_WDyfA18H6QnUL18T20",
+    opportunities: "Research",
+  },
+  {
+    id: "viettel",
+    name: "Viettel Solutions",
+    logoUrl:
+      "https://chuyendoisocongthuong.gov.vn/wp-content/uploads/2023/11/viettelsol.png",
+    opportunities: "Research",
   },
 ];

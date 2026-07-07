@@ -20,11 +20,11 @@ export const tekSoFar = [
   {
     label: "Founding Members",
     value: 25,
-    detail: "Selected from 200+ interested students",
+    detail: "Selected from 60+ students",
   },
   {
     label: "Active Members",
-    value: 40,
+    value: 36,
     detail: "After Alpha class recruitment",
   },
   {
@@ -35,7 +35,7 @@ export const tekSoFar = [
   },
   {
     label: "Rush Candidates",
-    value: 200,
+    value: 250,
     suffix: "+",
     detail: "Alpha Class interest",
   },
@@ -50,12 +50,12 @@ export const tekHighlights = [
   {
     title: "National ties",
     description:
-      "Hosted a panel with founders and leadership of the University of Michigan TEK Chapter - the first-ever TEK chapter and our official affiliate.",
+      "Hosted a panel with founders and leadership of the University of Michigan TEK Chapter.",
   },
   {
     title: "Pipeline growth",
     description:
-      "Alpha Class rush attracted 200+ candidates, establishing TEK as one of the largest tech communities at UMass.",
+      "Alpha Class rush attracted 250+ candidates, establishing TEK as one of the largest tech communities at UMass.",
   },
   {
     title: "What's ahead",

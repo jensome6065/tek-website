@@ -6,7 +6,7 @@ import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeader } from "@/components/shared/section-header";
 import { CTABanner } from "@/components/shared/cta-banner";
 import { MemberStoriesSection } from "@/components/members/member-stories-section";
-import { CommunityMemberCard } from "@/components/members/community-member-card";
+import { MemberDirectory } from "@/components/members/member-directory";
 
 export const metadata: Metadata = {
   title: "Members",
@@ -62,15 +62,7 @@ export default function MembersPage() {
             description="Engineers, designers, builders, and innovators across majors and years - united by community."
             className="mb-12"
           />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {communityMembers.map((member, index) => (
-              <CommunityMemberCard
-                key={member.id}
-                member={member}
-                index={index}
-              />
-            ))}
-          </div>
+          <MemberDirectory members={communityMembers} />
         </div>
       </section>
 

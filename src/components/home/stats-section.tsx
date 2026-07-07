@@ -18,14 +18,15 @@ export function StatsSection() {
             join.
           </p>
         </AnimatedReveal>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 sm:gap-x-14 lg:gap-x-16">
           {communityStats.map((stat) => (
-            <AnimatedCounter
-              key={stat.label}
-              value={stat.value}
-              suffix={stat.suffix}
-              label={stat.label}
-            />
+            <div key={stat.label} className="w-36 sm:w-40">
+              <AnimatedCounter
+                value={stat.value}
+                suffix={stat.suffix}
+                label={stat.label}
+              />
+            </div>
           ))}
         </div>
       </div>

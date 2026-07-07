@@ -1,3 +1,5 @@
+import { getMemberProfile } from "@/lib/data/member-profiles";
+
 export type StoryPrompt =
   | "Why I Joined TEK"
   | "My Favorite TEK Memory"
@@ -18,14 +20,63 @@ export interface MemberStory {
   featured?: boolean;
 }
 
+export type MemberStatus = "active" | "inactive";
+export type MemberCohort = "founding" | "alpha";
+
 export interface CommunityMember {
   id: string;
   name: string;
   major: string;
   graduationYear: string;
-  focus: string;
+  status: MemberStatus;
+  cohort: MemberCohort;
+  focus?: string;
+  photo?: string;
+  linkedin?: string;
   initials: string;
   accent: string;
+}
+
+const memberAccents = [
+  "from-dark-blue to-medium-blue",
+  "from-medium-blue to-light-blue",
+  "from-dark-neutral to-dark-blue",
+  "from-maroon/80 to-dark-blue",
+  "from-dark-blue to-dark-neutral",
+  "from-medium-blue to-dark-blue",
+  "from-light-blue to-medium-blue",
+  "from-dark-neutral to-medium-blue",
+  "from-maroon/70 to-medium-blue",
+  "from-dark-blue to-light-blue",
+  "from-medium-blue to-dark-neutral",
+] as const;
+
+/** Featured stories  -  homepage and Members page. */
+
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+const cohortOrder: Record<MemberCohort, number> = {
+  founding: 0,
+  alpha: 1,
+};
+
+function sortMembers(a: CommunityMember, b: CommunityMember): number {
+  const cohortDiff = cohortOrder[a.cohort] - cohortOrder[b.cohort];
+  if (cohortDiff !== 0) return cohortDiff;
+  return a.name.localeCompare(b.name);
+}
+
+export function groupCommunityMembers(members: CommunityMember[]) {
+  const active = members.filter((member) => member.status === "active").sort(sortMembers);
+  const inactive = members
+    .filter((member) => member.status === "inactive")
+    .sort(sortMembers);
+
+  return { active, inactive };
 }
 
 /** Featured stories  -  homepage and Members page. */
@@ -82,116 +133,161 @@ export const memberStories: MemberStory[] = [
 ];
 
 /** Broader member directory  -  update as the community grows. */
-export const communityMembers: CommunityMember[] = [
+type MemberRosterEntry = Pick<
+  CommunityMember,
+  "name" | "major" | "graduationYear"
+>;
+
+const alphaClassMembers = new Set([
+  "Sam Carroll",
+  "Anthony Cooper",
+  "Rahma Giwa",
+  "Peter Hart",
+  "Ansh Kanyadi",
+  "Shritan Kondaveti",
+  "Christine Kuan",
+  "Adam Lubomirski",
+  "Drew Marceau",
+  "Yonathan Mesfin",
+  "Vinh Nguyen",
+  "Maryam Syeda",
+  "Ari Thomas",
+  "Shamba Upadhyay",
+  "Anthony Yang",
+  "Daisy Phung",
+  "Chris Bouvier",
+  "Gabe Morse",
+  "Sydney Tor",
+]);
+
+const inactiveMembers = new Set([
+  "Charlie Desmond",
+  "Sue Gurung",
+  "Kushaan Naskar",
+  "Sara Kong",
+  "Drew Marceau",
+  "Rishabh Devnani",
+  "Glenn Kule",
+]);
+
+function formatMajor(major: string): string {
+  return major.replace(/Computer Science \+/g, "CS +");
+}
+
+const memberRoster: MemberRosterEntry[] = [
+  { name: "Shally Albert", major: "Computer Science", graduationYear: "2028" },
+  { name: "Sue Gurung", major: "Informatics", graduationYear: "2028" },
+  { name: "Jennifer Ye", major: "Computer Science", graduationYear: "2028" },
+  { name: "Grace Zhou", major: "Computer Science", graduationYear: "2028" },
   {
-    id: "m1",
-    name: "Aisha Patel",
-    major: "Computer Science",
-    graduationYear: "2027",
-    focus: "Software engineering",
-    initials: "AP",
-    accent: "from-dark-blue to-medium-blue",
-  },
-  {
-    id: "m2",
-    name: "Marcus Chen",
-    major: "Informatics",
-    graduationYear: "2026",
-    focus: "Product & startups",
-    initials: "MC",
-    accent: "from-medium-blue to-light-blue",
-  },
-  {
-    id: "m3",
-    name: "Sofia Ramirez",
-    major: "Computer Engineering",
+    name: "Charlie Desmond",
+    major: "Computer Science + Math",
     graduationYear: "2028",
-    focus: "Product design",
-    initials: "SR",
-    accent: "from-dark-neutral to-dark-blue",
   },
   {
-    id: "m4",
-    name: "Jordan Lee",
-    major: "CS + Business",
-    graduationYear: "2026",
-    focus: "Entrepreneurship",
-    initials: "JL",
-    accent: "from-maroon/80 to-dark-blue",
-  },
-  {
-    id: "m5",
-    name: "Nina Okonkwo",
-    major: "Computer Science",
-    graduationYear: "2027",
-    focus: "Full-stack development",
-    initials: "NO",
-    accent: "from-medium-blue to-dark-blue",
-  },
-  {
-    id: "m6",
-    name: "Chris Park",
-    major: "Mathematics + CS",
+    name: "Samath Gurung",
+    major: "Computer Science + Economics",
     graduationYear: "2028",
-    focus: "Machine learning",
-    initials: "CP",
-    accent: "from-dark-blue to-dark-neutral",
   },
   {
-    id: "m7",
-    name: "Elena Vasquez",
+    name: "Isha Mukherjee",
+    major: "Computer Science + Math",
+    graduationYear: "2028",
+  },
+  { name: "Nish Methuku", major: "Computer Science", graduationYear: "2028" },
+  {
+    name: "Sara Kong",
+    major: "Industrial Engineering + Math",
+    graduationYear: "2028",
+  },
+  {
+    name: "Yash Sawhney",
+    major: "Computer Science + Economics",
+    graduationYear: "2028",
+  },
+  { name: "Kushaan Naskar", major: "Computer Science", graduationYear: "2028" },
+  {
+    name: "Tiffany Zhang",
     major: "Biomedical Engineering",
-    graduationYear: "2027",
-    focus: "Health tech",
-    initials: "EV",
-    accent: "from-light-blue to-medium-blue",
-  },
-  {
-    id: "m8",
-    name: "Samir Khan",
-    major: "Computer Science",
-    graduationYear: "2026",
-    focus: "Systems & infrastructure",
-    initials: "SK",
-    accent: "from-dark-neutral to-medium-blue",
-  },
-  {
-    id: "m9",
-    name: "Taylor Brooks",
-    major: "Informatics",
     graduationYear: "2029",
-    focus: "UX research",
-    initials: "TB",
-    accent: "from-maroon/70 to-medium-blue",
   },
+  { name: "Ben Hamilton", major: "Computer Science", graduationYear: "2027" },
   {
-    id: "m10",
-    name: "Alex Rivera",
-    major: "Mechanical Engineering",
+    name: "Ishani Saha",
+    major: "Computer Science + Linguistics",
     graduationYear: "2028",
-    focus: "Hardware & robotics",
-    initials: "AR",
-    accent: "from-dark-blue to-light-blue",
   },
   {
-    id: "m11",
-    name: "Priya Desai",
-    major: "CS + Economics",
+    name: "Aarohee Gondkar",
+    major: "Computer Science + Psychology",
+    graduationYear: "2028",
+  },
+  {
+    name: "Vic Desouza",
+    major: "Computer Science + Math",
+    graduationYear: "2028",
+  },
+  { name: "Luan Meira", major: "Computer Science", graduationYear: "2028" },
+  { name: "Adam Post", major: "Computer Science", graduationYear: "2028" },
+  { name: "Chloe Le", major: "Computer Science", graduationYear: "2028" },
+  { name: "Krish Reddy", major: "Computer Science", graduationYear: "2028" },
+  { name: "Sylvia Shi Sidley", major: "Chemistry", graduationYear: "2028" },
+  { name: "Sam Carroll", major: "Computer Science", graduationYear: "2027" },
+  { name: "Anthony Cooper", major: "Informatics", graduationYear: "2029" },
+  { name: "Rahma Giwa", major: "Computer Science", graduationYear: "2028" },
+  { name: "Peter Hart", major: "Computer Science", graduationYear: "2029" },
+  { name: "Ansh Kanyadi", major: "Computer Science", graduationYear: "2028" },
+  { name: "Shritan Kondaveti", major: "Informatics", graduationYear: "2028" },
+  {
+    name: "Christine Kuan",
+    major: "Electrical Engineering",
+    graduationYear: "2028",
+  },
+  { name: "Adam Lubomirski", major: "Computer Science", graduationYear: "2028" },
+  {
+    name: "Drew Marceau",
+    major: "Computer Science + Computational Linguistics",
     graduationYear: "2027",
-    focus: "Fintech",
-    initials: "PD",
-    accent: "from-medium-blue to-dark-neutral",
   },
+  { name: "Yonathan Mesfin", major: "Computer Science", graduationYear: "2029" },
+  { name: "Vinh Nguyen", major: "Math + Physics", graduationYear: "2028" },
   {
-    id: "m12",
-    name: "Jamie Wu",
-    major: "Computer Science",
+    name: "Maryam Syeda",
+    major: "Computer Engineering",
     graduationYear: "2029",
-    focus: "Mobile development",
-    initials: "JW",
-    accent: "from-dark-neutral to-dark-blue",
   },
+  { name: "Ari Thomas", major: "CS + Stats & DS", graduationYear: "2029" },
+  { name: "Shamba Upadhyay", major: "CS + Biology", graduationYear: "2028" },
+  {
+    name: "Anthony Yang",
+    major: "Computer Science + Math",
+    graduationYear: "2028",
+  },
+  { name: "Daisy Phung", major: "Computer Science", graduationYear: "2029" },
+  { name: "Chris Bouvier", major: "Computer Science", graduationYear: "2029" },
+  { name: "Gabe Morse", major: "OIM", graduationYear: "2029" },
+  { name: "Sydney Tor", major: "Chemistry", graduationYear: "2027" },
+  { name: "Rishabh Devnani", major: "Computer Science", graduationYear: "2026" },
+  { name: "Glenn Kule", major: "Computer Science", graduationYear: "2028" },
 ];
+
+export const communityMembers: CommunityMember[] = memberRoster.map(
+  (member, index) => {
+    const profile = getMemberProfile(member.name);
+
+    return {
+      id: `m${index + 1}`,
+      ...member,
+      major: formatMajor(member.major),
+      status: inactiveMembers.has(member.name) ? "inactive" : "active",
+      cohort: alphaClassMembers.has(member.name) ? "alpha" : "founding",
+      photo: profile?.photo,
+      linkedin: profile?.linkedin,
+      initials: getInitials(member.name),
+      accent: memberAccents[index % memberAccents.length],
+    };
+  }
+);
 
 /** @deprecated Use memberStories */
 export type MemberSpotlight = MemberStory;
