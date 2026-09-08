@@ -1,6 +1,7 @@
 import type { CommunityMember } from "@/lib/data/members";
 import { groupCommunityMembers } from "@/lib/data/members";
 import { CommunityMemberCard } from "@/components/members/community-member-card";
+import { EmptyState } from "@/components/shared/empty-state";
 import { cn } from "@/lib/utils";
 
 interface MemberDirectoryProps {
@@ -41,6 +42,18 @@ function MemberGroup({
 
 export function MemberDirectory({ members }: MemberDirectoryProps) {
   const { active, inactive } = groupCommunityMembers(members);
+
+  if (active.length === 0 && inactive.length === 0) {
+    return (
+      <EmptyState
+        mood="bob"
+        title="Herd assembling"
+        description="Member profiles will show up here as the community grows. Check back soon — or join us."
+        actionLabel="Join TEK"
+        actionHref="/recruitment"
+      />
+    );
+  }
 
   return (
     <div className="space-y-16">

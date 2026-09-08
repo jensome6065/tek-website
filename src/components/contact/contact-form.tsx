@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState } from "react";
-import { CheckCircle2 } from "lucide-react";
 import {
   submitContactForm,
   type ContactActionState,
@@ -10,6 +9,7 @@ import {
   contactRoles,
   contactTopics,
 } from "@/lib/validations/contact";
+import { DinoSprite } from "@/components/shared/dino-sprite";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,11 +29,11 @@ export function ContactForm() {
   if (state.success) {
     return (
       <div className="flex h-full flex-col items-center justify-center rounded-3xl bg-card p-10 text-center shadow-soft">
-        <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-light-blue/30 text-dark-blue">
-          <CheckCircle2 className="h-7 w-7" aria-hidden />
+        <div className="dino-hop">
+          <DinoSprite size={48} tone="brand" />
         </div>
         <h3 className="mt-5 text-2xl font-semibold tracking-tight text-dark-neutral">
-          Message sent
+          Delivered to the herd
         </h3>
         <p className="mt-3 max-w-sm text-muted leading-relaxed">
           {state.message}
@@ -149,7 +149,14 @@ export function ContactForm() {
         )}
 
         <Button type="submit" size="lg" className="w-full" disabled={pending}>
-          {pending ? "Sending..." : "Send Message"}
+          {pending ? (
+            <span className="inline-flex items-center gap-2">
+              <DinoSprite size={18} tone="inherit" className="dino-bob" />
+              Sending…
+            </span>
+          ) : (
+            "Send Message"
+          )}
         </Button>
       </div>
     </form>

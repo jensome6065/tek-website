@@ -47,9 +47,8 @@ src/
     shared/            # Reusable section components
     home/              # Homepage sections
     contact/           # Contact form
-    community/         # Community page components
+    members/           # Member directory & cards
     events/            # Events filtering
-    resources/         # Resources page components
   lib/
     data/              # Content & copy (easy for officers to update)
     actions/           # Server actions

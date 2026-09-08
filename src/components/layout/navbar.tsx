@@ -16,6 +16,8 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const overHero = pathname === "/" && !scrolled && !open;
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -38,7 +40,7 @@ export function Navbar() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled
+        scrolled || open
           ? "border-b border-border/60 bg-background/90 py-3 shadow-soft backdrop-blur-md"
           : "bg-transparent py-5"
       )}
@@ -53,7 +55,12 @@ export function Navbar() {
             className="h-10 w-10 rounded-full"
             priority
           />
-          <span className="hidden text-sm font-semibold tracking-tight text-dark-neutral sm:block">
+          <span
+            className={cn(
+              "hidden text-sm font-semibold tracking-tight sm:block",
+              overHero ? "text-white" : "text-dark-neutral"
+            )}
+          >
             TEK
           </span>
         </Link>
@@ -65,9 +72,13 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 "rounded-full px-3 py-2 text-sm font-medium transition-colors",
-                pathname === link.href
-                  ? "text-dark-blue"
-                  : "text-muted hover:text-dark-neutral"
+                overHero
+                  ? pathname === link.href
+                    ? "text-white"
+                    : "text-white/70 hover:text-white"
+                  : pathname === link.href
+                    ? "text-dark-blue"
+                    : "text-muted hover:text-dark-neutral"
               )}
             >
               {link.label}
@@ -76,17 +87,40 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <ThemeToggle />
-          <Button asChild size="sm">
+          <ThemeToggle
+            className={
+              overHero
+                ? "text-white hover:bg-white/10"
+                : undefined
+            }
+          />
+          <Button
+            asChild
+            size="sm"
+            className={
+              overHero
+                ? "bg-surface-inverse text-brand hover:bg-surface-inverse/90"
+                : undefined
+            }
+          >
             <Link href="/recruitment">Join TEK</Link>
           </Button>
         </div>
 
         <div className="relative z-10 flex items-center gap-1 lg:hidden">
-          <ThemeToggle />
+          <ThemeToggle
+            className={
+              overHero
+                ? "text-white hover:bg-white/10"
+                : undefined
+            }
+          />
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-dark-neutral"
+            className={cn(
+              "inline-flex h-10 w-10 items-center justify-center rounded-full",
+              overHero ? "text-white" : "text-dark-neutral"
+            )}
             onClick={() => setOpen((prev) => !prev)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}

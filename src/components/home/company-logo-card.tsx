@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { FeaturedCompany } from "@/lib/data/companies";
 
 interface CompanyLogoCardProps {
@@ -19,16 +20,21 @@ export function CompanyLogoCard({ company }: CompanyLogoCardProps) {
 
   return (
     <li className="group relative shrink-0 list-none">
-      <div className="relative flex h-12 w-[7.25rem] items-center justify-center rounded-xl bg-white px-3 shadow-soft transition-shadow duration-300 group-hover:shadow-elevated sm:h-14 sm:w-32">
+      <a
+        href={company.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Visit ${company.name}`}
+        className="relative flex h-12 w-[7.25rem] items-center justify-center rounded-xl bg-white px-3 shadow-soft transition-shadow duration-300 group-hover:shadow-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medium-blue focus-visible:ring-offset-2 sm:h-14 sm:w-32"
+      >
         <div className="flex items-center justify-center transition-opacity duration-200 group-hover:opacity-0">
           {!failed ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={company.logoUrl}
+            <Image
+              src={company.logo}
               alt=""
+              width={104}
+              height={28}
               className="h-6 w-auto max-w-[5.5rem] object-contain sm:h-7 sm:max-w-[6.5rem]"
-              loading="lazy"
-              referrerPolicy="no-referrer"
               onError={() => setFailed(true)}
             />
           ) : (
@@ -43,7 +49,7 @@ export function CompanyLogoCard({ company }: CompanyLogoCardProps) {
             {company.name}
           </span>
         </div>
-      </div>
+      </a>
     </li>
   );
 }

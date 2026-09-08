@@ -23,9 +23,9 @@ export default function RecruitmentPage() {
   return (
     <>
       <PageHero
-        eyebrow="Recruitment"
+        eyebrow="Fall '26 · Beta Class"
         title="Join a community that invests in you"
-        description="We look for curiosity, kindness, and a desire to build with others - not a perfect resume."
+        description="Beta class recruitment releases soon. We look for curiosity, kindness, and a desire to build with others - not a perfect resume."
       />
 
       <section className="pb-16 sm:pb-20">

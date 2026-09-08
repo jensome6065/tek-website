@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { EventCategory, TekEvent } from "@/lib/data/events";
 import { EventCard } from "@/components/shared/event-card";
+import { EmptyState } from "@/components/shared/empty-state";
 import { cn } from "@/lib/utils";
 
 const filters: { label: string; value: EventCategory }[] = [
@@ -55,7 +56,12 @@ export function EventsFilter({ events, title }: EventsFilterProps) {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="mt-10 text-muted">No events in this category yet.</p>
+        <EmptyState
+          className="mt-6"
+          mood="idle"
+          title="No footprints here yet"
+          description="Nothing in this category — try another trail, or check back when the next event lands."
+        />
       ) : (
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((event, index) => (

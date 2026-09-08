@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import {
+  DINO_ASPECT,
+  DINO_SPRITE,
+} from "@/components/shared/dino-sprite";
 
 type Footprint = {
   id: number;
@@ -16,8 +20,7 @@ const PRINT_LIFETIME_MS = 900;
 const JUMP_DURATION_MS = 300;
 const JUMP_HEIGHT_PX = 16;
 const DINO_W = 32;
-const DINO_H = 34;
-const SPRITE = "/cursors/dino-stand.png";
+const DINO_H = Math.round(DINO_W * DINO_ASPECT);
 
 function PrintMark({ side }: { side: 0 | 1 }) {
   const offset = side === 0 ? -2.5 : 2.5;
@@ -201,8 +204,8 @@ export function DinoCursor() {
           width: DINO_W,
           height: DINO_H,
           transform: "translate3d(-100px, -100px, 0)",
-          WebkitMaskImage: `url(${SPRITE})`,
-          maskImage: `url(${SPRITE})`,
+          WebkitMaskImage: `url(${DINO_SPRITE})`,
+          maskImage: `url(${DINO_SPRITE})`,
           WebkitMaskSize: "100% 100%",
           maskSize: "100% 100%",
           WebkitMaskRepeat: "no-repeat",

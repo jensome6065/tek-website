@@ -10,9 +10,9 @@ import {
   strategicAlignment,
   strategicVision,
   tekHighlights,
-  tekSoFar,
   whyPartner,
 } from "@/lib/data/sponsors";
+import { sponsorStats } from "@/lib/data/stats";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeader } from "@/components/shared/section-header";
 import { AnimatedReveal } from "@/components/shared/animated-reveal";
@@ -96,14 +96,16 @@ export default function SponsorsPage() {
             description="Founded in 2025 as the first professional and social technology community at UMass Amherst - with rapid semester-over-semester growth."
           />
           <div className="mt-12 grid grid-cols-2 gap-8 lg:grid-cols-4">
-            {tekSoFar.map((stat) => (
-              <div key={stat.label} className="text-center">
+            {sponsorStats.map((stat) => (
+              <div key={stat.id} className="text-center">
                 <AnimatedCounter
                   value={stat.value}
-                  suffix={"suffix" in stat ? stat.suffix : undefined}
+                  suffix={stat.suffix}
                   label={stat.label}
                 />
-                <p className="mt-2 text-sm text-muted">{stat.detail}</p>
+                {stat.detail ? (
+                  <p className="mt-2 text-sm text-muted">{stat.detail}</p>
+                ) : null}
               </div>
             ))}
           </div>
@@ -223,7 +225,7 @@ export default function SponsorsPage() {
                             isFounders ? "text-light-blue" : "text-medium-blue"
                           )}
                         >
-                          ✓
+                          ?
                         </span>
                         {perk}
                       </li>

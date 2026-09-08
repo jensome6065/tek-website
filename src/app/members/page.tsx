@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { boardMembers } from "@/lib/data/board";
-import { communityMembers } from "@/lib/data/members";
+import { boardMembers, communityMembers } from "@/lib/data/members";
 import { BoardCard } from "@/components/shared/board-card";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeader } from "@/components/shared/section-header";

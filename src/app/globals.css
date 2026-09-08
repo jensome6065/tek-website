@@ -174,9 +174,109 @@ html.dino-cursor-active * {
   mask-mode: alpha;
 }
 
+@keyframes dino-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes dino-wander {
+  0%,
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+  40% {
+    transform: translateX(14px) scaleX(1);
+  }
+  45% {
+    transform: translateX(14px) scaleX(-1);
+  }
+  85% {
+    transform: translateX(-10px) scaleX(-1);
+  }
+  90% {
+    transform: translateX(-10px) scaleX(1);
+  }
+}
+
+@keyframes dino-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  70% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes dino-stampede {
+  from {
+    left: -10%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  to {
+    left: 110%;
+    opacity: 0;
+  }
+}
+
+@keyframes dino-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.dino-bob {
+  animation: dino-bob 1.1s ease-in-out infinite;
+}
+
+.dino-wander {
+  animation: dino-wander 4.5s ease-in-out infinite;
+}
+
+.dino-hop {
+  animation: dino-hop 0.45s ease-out;
+}
+
+.dino-stampede {
+  animation-name: dino-stampede;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.dino-toast {
+  animation: dino-toast-in 0.35s ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dino-print {
     animation: none;
     opacity: 0;
+  }
+
+  .dino-bob,
+  .dino-wander,
+  .dino-hop,
+  .dino-stampede,
+  .dino-toast {
+    animation: none;
   }
 }

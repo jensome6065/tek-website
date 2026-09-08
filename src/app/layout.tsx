@@ -4,6 +4,8 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { BackToTopButton } from "@/components/layout/back-to-top";
 import { DinoCursor } from "@/components/layout/dino-cursor";
+import { DinoEasterEgg } from "@/components/shared/dino-easter-egg";
+import { SkipToContent } from "@/components/layout/skip-to-content";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
 
@@ -78,11 +80,15 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
+          <SkipToContent />
           <Navbar />
-          <main id="main-content">{children}</main>
+          <main id="main-content" tabIndex={-1} className="scroll-mt-24 outline-none">
+            {children}
+          </main>
           <Footer />
           <BackToTopButton />
           <DinoCursor />
+          <DinoEasterEgg />
         </ThemeProvider>
       </body>
     </html>

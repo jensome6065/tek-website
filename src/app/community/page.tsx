@@ -37,7 +37,7 @@ export default function CommunityPage() {
               Upcoming
             </h2>
             <p className="mt-4 max-w-xl text-muted leading-relaxed">
-              Stay tuned for Fall &apos;26 recruitment.
+              Fall &apos;26 Beta class recruitment releases soon.
             </p>
           </AnimatedReveal>
         </div>

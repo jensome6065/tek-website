@@ -20,7 +20,7 @@ export function StatsSection() {
         </AnimatedReveal>
         <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 sm:gap-x-14 lg:gap-x-16">
           {communityStats.map((stat) => (
-            <div key={stat.label} className="w-36 sm:w-40">
+            <div key={stat.id} className="w-36 sm:w-40">
               <AnimatedCounter
                 value={stat.value}
                 suffix={stat.suffix}

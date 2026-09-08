@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +26,14 @@ export function AnimatedReveal({
   variants = defaultVariants,
   as = "div",
 }: AnimatedRevealProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const classNames = cn(className);
+
+  if (prefersReducedMotion) {
+    const Tag = as;
+    return <Tag className={classNames}>{children}</Tag>;
+  }
+
   const Component = motion[as];
 
   return (
@@ -35,7 +43,7 @@ export function AnimatedReveal({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
       variants={variants}
-      className={cn(className)}
+      className={classNames}
     >
       {children}
     </Component>

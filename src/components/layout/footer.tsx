@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
 import { footerLinks, socialLinks } from "@/lib/data/navigation";
 import { InstagramIcon, LinkedInIcon } from "@/components/ui/icons";
+import { KinshipMark } from "@/components/shared/kinship-mark";
 
 export function Footer() {
   return (
@@ -117,7 +118,7 @@ export function Footer() {
             © {new Date().getFullYear()} TEK at UMass Amherst. All rights
             reserved.
           </p>
-          <p>Technology. Empowerment. Kinship.</p>
+          <KinshipMark />
         </div>
       </div>
     </footer>

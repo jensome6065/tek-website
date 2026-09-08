@@ -2,8 +2,7 @@
 
 import { Mail } from "lucide-react";
 import { motion } from "framer-motion";
-import type { BoardMember } from "@/lib/data/board";
-import { getMemberProfile } from "@/lib/data/member-profiles";
+import type { BoardMember } from "@/lib/data/members";
 import { MemberAvatar } from "@/components/members/member-avatar";
 import { LinkedInIcon } from "@/components/ui/icons";
 
@@ -13,11 +12,6 @@ interface BoardCardProps {
 }
 
 export function BoardCard({ member, index = 0 }: BoardCardProps) {
-  const profile = getMemberProfile(member.name);
-  const photo = profile?.photo;
-  const linkedin = profile?.linkedin ?? member.linkedin;
-  const showLinkedIn = linkedin && linkedin !== "#";
-
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -32,7 +26,7 @@ export function BoardCard({ member, index = 0 }: BoardCardProps) {
     >
       <MemberAvatar
         name={member.name}
-        photo={photo}
+        photo={member.photo}
         initials={member.initials}
         accent={member.accent}
         className="h-56 transition-transform duration-500 group-hover:scale-105"
@@ -48,9 +42,9 @@ export function BoardCard({ member, index = 0 }: BoardCardProps) {
         </p>
 
         <div className="mt-5 flex gap-3">
-          {showLinkedIn ? (
+          {member.linkedin ? (
             <a
-              href={linkedin}
+              href={member.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-background-warm text-dark-blue transition-colors hover:bg-light-blue/30"

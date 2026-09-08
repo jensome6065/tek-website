@@ -1,3 +1,12 @@
+/** Homepage live signal — set `active: false` to hide the strip. */
+export const recruitmentSignal = {
+  active: true,
+  label: "Fall '26 Recruitment",
+  detail: "Beta class releases soon",
+  href: "/recruitment",
+  cta: "Learn more",
+} as const;
+
 export const recruitmentSteps = [
   {
     title: "Interest Form",

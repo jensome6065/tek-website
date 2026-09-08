@@ -16,31 +16,6 @@ export const sponsorshipEnables = [
   "Create flagship campus events that connect industry with top talent",
 ];
 
-export const tekSoFar = [
-  {
-    label: "Founding Members",
-    value: 25,
-    detail: "Selected from 60+ students",
-  },
-  {
-    label: "Active Members",
-    value: 36,
-    detail: "After Alpha class recruitment",
-  },
-  {
-    label: "Instagram Followers",
-    value: 500,
-    suffix: "+",
-    detail: "Posts reaching 200,000+ views",
-  },
-  {
-    label: "Rush Candidates",
-    value: 250,
-    suffix: "+",
-    detail: "Alpha Class interest",
-  },
-] as const;
-
 export const tekHighlights = [
   {
     title: "First professional speaker",
