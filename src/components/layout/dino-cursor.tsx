@@ -175,7 +175,6 @@ export function DinoCursor() {
       document.documentElement.removeEventListener("mouseleave", onLeave);
       if (raf.current !== null) cancelAnimationFrame(raf.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- paint reads refs only
   }, [enabled]);
 
   if (!enabled) return null;

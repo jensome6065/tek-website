@@ -73,9 +73,7 @@ export function Navbar() {
               className={cn(
                 "rounded-full px-3 py-2 text-sm font-medium transition-colors",
                 overHero
-                  ? pathname === link.href
-                    ? "text-white"
-                    : "text-white/70 hover:text-white"
+                  ? "text-white/70 hover:text-white"
                   : pathname === link.href
                     ? "text-dark-blue"
                     : "text-muted hover:text-dark-neutral"
