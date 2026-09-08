@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
 import { boardMembers } from "@/lib/data/board";
-import { communityMembers, memberStories } from "@/lib/data/members";
+import { communityMembers } from "@/lib/data/members";
 import { BoardCard } from "@/components/shared/board-card";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeader } from "@/components/shared/section-header";
 import { CTABanner } from "@/components/shared/cta-banner";
-import { MemberStoriesSection } from "@/components/members/member-stories-section";
 import { MemberDirectory } from "@/components/members/member-directory";
 
 export const metadata: Metadata = {
   title: "Members",
   description:
-    "Meet the TEK community - member stories, executive board, and the people who make TEK feel like home.",
+    "Meet the TEK community - executive board and the people who make TEK feel like home.",
 };
 
 export default function MembersPage() {
@@ -20,20 +19,8 @@ export default function MembersPage() {
       <PageHero
         eyebrow="People"
         title="Meet TEK"
-        description="The heart of TEK isn't a program - it's the people who show up for each other. Stories, leadership, and the full community."
+        description="The heart of TEK isn't a program - it's the people who show up for each other."
       />
-
-      <section id="stories" className="scroll-mt-28 pb-16 sm:pb-20">
-        <div className="container-page">
-          <SectionHeader
-            eyebrow="Stories"
-            title="Member stories"
-            description="Real voices from the community - why they joined, what they built, and how they found their people."
-            className="mb-12"
-          />
-          <MemberStoriesSection stories={memberStories} />
-        </div>
-      </section>
 
       <section
         id="board"

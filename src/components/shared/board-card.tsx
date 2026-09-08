@@ -43,20 +43,9 @@ export function BoardCard({ member, index = 0 }: BoardCardProps) {
           {member.name}
         </h3>
         <p className="mt-1 text-sm font-medium text-maroon">{member.role}</p>
-        <p className="mt-1 text-sm text-muted">{member.major}</p>
-
-        <div className="mt-4 space-y-3 border-t border-border pt-4 text-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-sm:opacity-100">
-          <div>
-            <p className="text-muted">Favorite technology</p>
-            <p className="font-medium text-dark-neutral">{member.favoriteTech}</p>
-          </div>
-          <div>
-            <p className="text-muted">Favorite TEK memory</p>
-            <p className="font-medium text-dark-neutral leading-relaxed">
-              {member.favoriteMemory}
-            </p>
-          </div>
-        </div>
+        <p className="mt-1 text-sm text-medium-blue">
+          {member.major} · {member.graduationYear}
+        </p>
 
         <div className="mt-5 flex gap-3">
           {showLinkedIn ? (

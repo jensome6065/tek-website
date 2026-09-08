@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { BackToTopButton } from "@/components/layout/back-to-top";
+import { DinoCursor } from "@/components/layout/dino-cursor";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
 
@@ -79,6 +81,8 @@ export default function RootLayout({
           <Navbar />
           <main id="main-content">{children}</main>
           <Footer />
+          <BackToTopButton />
+          <DinoCursor />
         </ThemeProvider>
       </body>
     </html>

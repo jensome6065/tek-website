@@ -1,25 +1,5 @@
 import { getMemberProfile } from "@/lib/data/member-profiles";
 
-export type StoryPrompt =
-  | "Why I Joined TEK"
-  | "My Favorite TEK Memory"
-  | "What I Built Through TEK"
-  | "My Internship Journey"
-  | "How TEK Helped Me Find My Community";
-
-export interface MemberStory {
-  id: string;
-  name: string;
-  major: string;
-  graduationYear: string;
-  currentWork: string;
-  prompt: StoryPrompt;
-  excerpt: string;
-  initials: string;
-  accent: string;
-  featured?: boolean;
-}
-
 export type MemberStatus = "active" | "inactive";
 export type MemberCohort = "founding" | "alpha";
 
@@ -51,8 +31,6 @@ const memberAccents = [
   "from-medium-blue to-dark-neutral",
 ] as const;
 
-/** Featured stories  -  homepage and Members page. */
-
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/);
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
@@ -78,59 +56,6 @@ export function groupCommunityMembers(members: CommunityMember[]) {
 
   return { active, inactive };
 }
-
-/** Featured stories  -  homepage and Members page. */
-export const memberStories: MemberStory[] = [
-  {
-    id: "1",
-    name: "Aisha Patel",
-    major: "Computer Science",
-    graduationYear: "2027",
-    currentWork: "SWE Intern at Stripe",
-    prompt: "My Internship Journey",
-    excerpt:
-      "I practiced my first mock interview with a TEK alum on a Tuesday night. Two months later, I was walking into Stripe for my internship - still texting that same group chat.",
-    initials: "AP",
-    accent: "from-dark-blue to-medium-blue",
-    featured: true,
-  },
-  {
-    id: "2",
-    name: "Marcus Chen",
-    major: "Informatics",
-    graduationYear: "2026",
-    currentWork: "Building a campus events app",
-    prompt: "What I Built Through TEK",
-    excerpt:
-      "Project Build Nights gave me teammates who cared as much as I did. We shipped a campus events app that students actually use - and I found my co-founders.",
-    initials: "MC",
-    accent: "from-medium-blue to-light-blue",
-  },
-  {
-    id: "3",
-    name: "Sofia Ramirez",
-    major: "Computer Engineering",
-    graduationYear: "2028",
-    currentWork: "Product Intern at Notion",
-    prompt: "How TEK Helped Me Find My Community",
-    excerpt:
-      "I transferred mid-year and didn't know anyone. A coffee chat turned into a family group, and suddenly campus felt like home.",
-    initials: "SR",
-    accent: "from-dark-neutral to-dark-blue",
-  },
-  {
-    id: "4",
-    name: "Jordan Lee",
-    major: "CS + Business",
-    graduationYear: "2026",
-    currentWork: "Founder, StudySync",
-    prompt: "Why I Joined TEK",
-    excerpt:
-      "I wanted more than resume workshops. I wanted people who would build with me, celebrate with me, and still show up for study night when things got hard.",
-    initials: "JL",
-    accent: "from-maroon/80 to-dark-blue",
-  },
-];
 
 /** Broader member directory  -  update as the community grows. */
 type MemberRosterEntry = Pick<
@@ -288,7 +213,3 @@ export const communityMembers: CommunityMember[] = memberRoster.map(
     };
   }
 );
-
-/** @deprecated Use memberStories */
-export type MemberSpotlight = MemberStory;
-export const memberSpotlights = memberStories;

@@ -143,3 +143,40 @@ body {
     padding-inline: 1.5rem;
   }
 }
+
+/* Custom Chrome-dino cursor (desktop / fine pointer only) */
+html.dino-cursor-active,
+html.dino-cursor-active * {
+  cursor: none !important;
+}
+
+@keyframes dino-print-fade {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.dino-print {
+  animation: dino-print-fade 900ms ease-out forwards;
+}
+
+.dino-sprite {
+  background-color: var(--foreground);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  mask-mode: alpha;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dino-print {
+    animation: none;
+    opacity: 0;
+  }
+}

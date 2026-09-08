@@ -1,80 +1,78 @@
 "use client";
 
-import { Code2, HeartHandshake, TrendingUp } from "lucide-react";
+import { Briefcase, Code2, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { AnimatedReveal } from "@/components/shared/animated-reveal";
 
 const pillars = [
   {
-    title: "Build Together",
+    title: "Professional",
     description:
-      "Hackathons, project nights, technical workshops, startup ideas, engineering collaboration, product design, and opportunities to create alongside other passionate students.",
+      "Resume reviews, mock interviews, and recruiter events - career growth without performative networking.",
+    icon: Briefcase,
+    accent: "bg-dark-blue/5 text-dark-blue",
+  },
+  {
+    title: "Technical",
+    description:
+      "Project nights, hackathons, and workshops where you learn by building alongside people who care.",
     icon: Code2,
+    accent: "bg-medium-blue/10 text-medium-blue",
   },
   {
-    title: "Grow Together",
+    title: "Social",
     description:
-      "Resume workshops, mock interviews, alumni mentorship, recruiter events, internship preparation, speaker panels, and career development opportunities that help members reach the next level.",
-    icon: TrendingUp,
-  },
-  {
-    title: "Belong Together",
-    description:
-      "Coffee chats, study nights, retreats, family groups, game nights, movie marathons, dinners, and traditions that transform classmates into lifelong friends.",
-    icon: HeartHandshake,
+      "Coffee chats, retreats, families, and traditions that turn a campus into a home.",
+    icon: Users,
+    accent: "bg-maroon/10 text-maroon",
   },
 ];
 
 export function WhyTekExists() {
   return (
-    <section className="bg-background-warm py-20 sm:py-28">
+    <section className="bg-background-warm py-14 sm:py-20">
       <div className="container-page">
         <AnimatedReveal className="max-w-3xl">
+          <p className="mb-3 text-sm font-medium tracking-wide text-medium-blue uppercase">
+            Why TEK exists
+          </p>
           <h2 className="text-3xl font-semibold tracking-tight text-dark-neutral sm:text-4xl lg:text-5xl">
-            Why TEK Exists
+            Built for belonging - and the growth that follows
           </h2>
         </AnimatedReveal>
 
-        <AnimatedReveal delay={0.1} className="mt-10 max-w-4xl">
-          <blockquote className="text-2xl font-semibold leading-snug tracking-tight text-dark-blue sm:text-3xl lg:text-4xl lg:leading-tight">
-            Too often, technology communities ask students to compete. We
-            built one that helps them belong.
-          </blockquote>
-        </AnimatedReveal>
-
-        <AnimatedReveal delay={0.15}>
-          <p className="mt-8 max-w-3xl text-lg leading-relaxed text-muted">
-            TEK was founded to create the community we wished existed at UMass
-            Amherst - a place where engineers, designers, product managers,
-            founders, builders, and innovators can grow professionally while
-            forming genuine friendships. We believe the best careers are built
-            through collaboration, mentorship, and shared experiences, not
-            competition.
+        <AnimatedReveal delay={0.08} className="mt-6 max-w-3xl">
+          <p className="text-lg leading-relaxed text-muted sm:text-xl">
+            Too often, tech communities ask students to compete. We built
+            one where engineers, designers, PMs, and builders grow together
+            -
+            professionally, technically, and as friends.
           </p>
         </AnimatedReveal>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
           {pillars.map((pillar, index) => (
             <motion.article
               key={pillar.title}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{
-                duration: 0.55,
-                delay: index * 0.1,
+                duration: 0.5,
+                delay: index * 0.08,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              whileHover={{ y: -4 }}
-              className="rounded-2xl bg-card p-8 shadow-soft transition-shadow duration-300 hover:shadow-elevated"
+              className="rounded-2xl bg-card p-6 shadow-soft sm:p-7"
             >
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-light-blue/25 text-dark-blue">
-                <pillar.icon className="h-6 w-6" aria-hidden />
+              <div
+                className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${pillar.accent}`}
+              >
+                <pillar.icon className="h-5 w-5" aria-hidden />
               </div>
-              <h3 className="mt-5 text-xl font-semibold tracking-tight text-dark-neutral">
+              <h3 className="mt-4 text-lg font-semibold tracking-tight text-dark-neutral">
                 {pillar.title}
               </h3>
-              <p className="mt-3 text-muted leading-relaxed">
+              <p className="mt-2 text-sm leading-relaxed text-muted sm:text-base">
                 {pillar.description}
               </p>
             </motion.article>

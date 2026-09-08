@@ -153,6 +153,7 @@ export const memberProfiles: Record<string, MemberProfile> = {
     linkedin: "https://www.linkedin.com/in/shambhavi-upadhyay-8733b8245/",
   },
   "Anthony Yang": {
+    photo: "/photos/members/alpha/anthonyY.png",
     linkedin: "https://www.linkedin.com/in/anthony-yang-4045b33a7/",
   },
   "Daisy Phung": {

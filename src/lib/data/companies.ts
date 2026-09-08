@@ -113,7 +113,7 @@ export const featuredCompanies: FeaturedCompany[] = [
     id: "nintendo",
     name: "Nintendo",
     logoUrl:
-      "https://www.hatchwise.com/wp-content/uploads/2023/02/image-48.png",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEtekme56liSOZ99oiX0xEWrpBG0r6UJkd1vZGMMKvm-2KqiX8mlQ63iAt&s=10",
     opportunities: "Internships",
   },
   {
@@ -218,7 +218,7 @@ export const featuredCompanies: FeaturedCompany[] = [
     id: "thirdlayer",
     name: "ThirdLayer",
     logoUrl:
-      "https://www.thirdlayer.inc/thirdlayer-logo.svg",
+      "https://www.thirdlayer.inc/assets/thirdlayer_logo_flower_black.svg",
     opportunities: "Internships",
   },
   {
@@ -323,7 +323,7 @@ export const featuredCompanies: FeaturedCompany[] = [
     id: "hkust",
     name: "HKUST Fok Ying Tung Research Institute",
     logoUrl:
-      "https://media.licdn.com/dms/image/v2/C4E0BAQF112KADbCqJw/company-logo_200_200/company-logo_200_200/0/1631317279216?e=1784764800&v=beta&t=oUWM6VYzW3AtUfl8yDEGO3TQ_WDyfA18H6QnUL18T20",
+      "https://upload.wikimedia.org/wikipedia/en/8/85/Hong_Kong_University_of_Science_and_Technology_symbol.svg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
     opportunities: "Research",
   },
   {
