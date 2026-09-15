@@ -24,6 +24,8 @@ export function Hero() {
           alt="TEK members gathering in professional attire"
           fill
           priority
+          fetchPriority="high"
+          quality={75}
           className="object-cover object-[42%_40%] sm:object-[45%_35%]"
           sizes="100vw"
         />

@@ -21,6 +21,8 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
   const [isInView, setIsInView] = useState(false);
   const [muted, setMuted] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
+  /** Defer attaching any MP4 sources until the reel is near the viewport. */
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   const current = videos[index];
   const hasVideos = videos.length > 0;
@@ -38,8 +40,11 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
     if (!node) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.35 }
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+        if (entry.isIntersecting) setShouldLoad(true);
+      },
+      { rootMargin: "200px 0px", threshold: 0.2 }
     );
     observer.observe(node);
     return () => observer.disconnect();
@@ -73,7 +78,7 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
       if (!video) return;
       video.muted = muted;
 
-      if (i === index && isInView && !reducedMotion) {
+      if (i === index && isInView && shouldLoad && !reducedMotion) {
         video.play().catch(() => {
           // Autoplay can fail until muted / user gesture.
         });
@@ -81,7 +86,7 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
         video.pause();
       }
     });
-  }, [index, isInView, hasVideos, reducedMotion, muted]);
+  }, [index, isInView, hasVideos, reducedMotion, muted, shouldLoad]);
 
   const scrollToIndex = (nextIndex: number) => {
     const scroller = scrollerRef.current;
@@ -128,30 +133,53 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
               className="aspect-[9/16] snap-y snap-mandatory overflow-y-auto overscroll-y-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               aria-label="Instagram video gallery"
             >
-              {videos.map((video, i) => (
-                <div
-                  key={video.id}
-                  className="relative aspect-[9/16] w-full snap-start snap-always"
-                >
-                  <video
-                    ref={(el) => {
-                      videoRefs.current[i] = el;
-                    }}
-                    src={video.src}
-                    className="h-full w-full object-cover dark:brightness-[1.06]"
-                    playsInline
-                    muted={muted}
-                    loop={videos.length === 1}
-                    preload={i === 0 || i === index ? "auto" : "metadata"}
-                    onEnded={() => {
-                      if (videos.length > 1) {
-                        scrollToIndex((i + 1) % videos.length);
-                      }
-                    }}
-                    aria-label={video.label}
-                  />
-                </div>
-              ))}
+              {videos.map((video, i) => {
+                const nearActive = Math.abs(i - index) <= 1;
+                const attachSrc = shouldLoad && nearActive;
+                // No poster/MP4 network cost until the reel is near the viewport.
+                const showPoster = shouldLoad && nearActive;
+
+                return (
+                  <div
+                    key={video.id}
+                    className="relative aspect-[9/16] w-full snap-start snap-always bg-[#211f33]"
+                  >
+                    {showPoster ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={video.poster}
+                        alt=""
+                        width={540}
+                        height={960}
+                        decoding="async"
+                        loading={i === index ? "eager" : "lazy"}
+                        className="absolute inset-0 h-full w-full object-cover"
+                        draggable={false}
+                      />
+                    ) : null}
+                    {attachSrc ? (
+                      <video
+                        ref={(el) => {
+                          videoRefs.current[i] = el;
+                        }}
+                        src={video.src}
+                        poster={video.poster}
+                        className="absolute inset-0 h-full w-full object-cover dark:brightness-[1.06]"
+                        playsInline
+                        muted={muted}
+                        loop={videos.length === 1}
+                        preload={i === index ? "metadata" : "none"}
+                        onEnded={() => {
+                          if (videos.length > 1) {
+                            scrollToIndex((i + 1) % videos.length);
+                          }
+                        }}
+                        aria-label={video.label}
+                      />
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
 
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 pt-16 pb-4">

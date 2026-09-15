@@ -6,10 +6,11 @@ Official website for **TEK (Technology, Empowerment, & Kinship)**  -  the first 
 
 ## Stack
 
-- Next.js 15 (App Router)
+- Next.js 16 (App Router)
 - TypeScript
 - Tailwind CSS
 - Framer Motion
+- next-themes (light / dark)
 - Lucide Icons
 - Resend + Server Actions (contact form)
 - Zod validation
@@ -49,16 +50,34 @@ src/
     contact/           # Contact form
     members/           # Member directory & cards
     events/            # Events filtering
+    theme/             # Theme provider & toggle
   lib/
     data/              # Content & copy (easy for officers to update)
     actions/           # Server actions
     validations/       # Zod schemas
-public/logos/          # Brand assets
+public/
+  logos/               # Brand assets
+  photos/moments/      # Community photo gallery
+  videos/instagram/    # Reel MP4s + posters/
+  hero.jpg             # Homepage hero image
 ```
 
 ## Updating content
 
-Most copy and listings live in `src/lib/data/`. Future officers can update events, board members, stats, and FAQs there without touching layout code.
+Most copy and listings live in `src/lib/data/`. Officers can update these without touching layout code:
+
+| File | What it controls |
+| --- | --- |
+| `events.ts` | Events page listings |
+| `members.ts` | Executive board & member directory |
+| `recruitment.ts` | Recruitment copy, timeline, FAQs |
+| `sponsors.ts` / `companies.ts` | Sponsor & company logos |
+| `stats.ts` / `about.ts` | Homepage stats & about copy |
+| `moments.ts` | Photo gallery (`public/photos/moments/`) |
+| `moment-videos.ts` | Video reel (`public/videos/instagram/` + `posters/`) |
+| `navigation.ts` | Navbar / footer links |
+
+For photos and videos: add the asset under `public/`, then register it in the matching data file (`src`, `alt`/`label`, dimensions or poster path).
 
 ## Deploy
 

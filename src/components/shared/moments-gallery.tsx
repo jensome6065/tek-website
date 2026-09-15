@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,8 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const featured = photos[featuredIndex];
 
@@ -31,14 +33,25 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
     [photos.length]
   );
 
-  // Gentle auto-advance while idle
   useEffect(() => {
-    if (paused || lightboxIndex !== null || photos.length < 2) return;
+    const node = rootRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.25 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  // Gentle auto-advance while idle and on-screen
+  useEffect(() => {
+    if (!inView || paused || lightboxIndex !== null || photos.length < 2) return;
     const id = window.setInterval(() => {
       setFeaturedIndex((current) => (current + 1) % photos.length);
-    }, 3000);
+    }, 4500);
     return () => window.clearInterval(id);
-  }, [paused, lightboxIndex, photos.length]);
+  }, [inView, paused, lightboxIndex, photos.length]);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
 
@@ -79,6 +92,7 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
   return (
     <>
       <div
+        ref={rootRef}
         className="flex h-full flex-col gap-2.5"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
@@ -88,17 +102,16 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
           <AnimatePresence mode="sync" initial={false}>
             <motion.div
               key={featured.id}
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="absolute inset-0"
             >
               <Image
                 src={featured.src}
                 alt={featured.alt}
                 fill
-                priority
                 sizes="(max-width: 1024px) 100vw, 55vw"
                 className="object-cover dark:brightness-[1.06]"
               />
@@ -260,8 +273,8 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
                   width={lightboxPhoto.width}
                   height={lightboxPhoto.height}
                   className="max-h-[80vh] w-auto max-w-full rounded-2xl object-contain"
+                  style={{ width: "auto", height: "auto" }}
                   sizes="90vw"
-                  priority
                 />
               </div>
               <p className="mt-4 text-sm font-medium tracking-wide text-white/90">

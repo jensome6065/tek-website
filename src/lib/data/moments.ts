@@ -21,8 +21,8 @@ export const momentPhotos: MomentPhoto[] = [
     src: "/photos/moments/hike.jpg",
     alt: "TEK members on a hike",
     label: "Hike @ Mount Holyoke Range State Park",
-    width: 1800,
-    height: 1350,
+    width: 1400,
+    height: 1050,
   },
   {
     id: "bid",
@@ -37,8 +37,8 @@ export const momentPhotos: MomentPhoto[] = [
     src: "/photos/moments/maple.jpg",
     alt: "TEK members with maple creemees",
     label: "Enjoying Maple creemees in Vermont",
-    width: 1800,
-    height: 1350,
+    width: 1400,
+    height: 1050,
   },
   {
     id: "boys",
@@ -93,8 +93,8 @@ export const momentPhotos: MomentPhoto[] = [
     src: "/photos/moments/grill.jpg",
     alt: "TEK members grilling at a cookout",
     label: "Grill session with TEK",
-    width: 1800,
-    height: 1350,
+    width: 1400,
+    height: 1050,
   },
   {
     id: "core-four",

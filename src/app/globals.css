@@ -70,6 +70,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Avoid CLS when the vertical scrollbar appears after content paints */
+  scrollbar-gutter: stable;
 }
 
 body {

@@ -15,6 +15,13 @@ export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [menuPathname, setMenuPathname] = useState(pathname);
+
+  // Close the mobile menu when the route changes (e.g. back/forward).
+  if (pathname !== menuPathname) {
+    setMenuPathname(pathname);
+    setOpen(false);
+  }
 
   const overHero = pathname === "/" && !scrolled && !open;
 
@@ -26,10 +33,6 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -39,14 +42,19 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        // Fixed height keeps nav chrome from shifting on scroll (CLS)
+        "fixed inset-x-0 top-0 z-50 h-16 transition-[background-color,box-shadow,border-color] duration-300",
         scrolled || open
-          ? "border-b border-border/60 bg-background/90 py-3 shadow-soft backdrop-blur-md"
-          : "bg-transparent py-5"
+          ? "border-b border-border/60 bg-background/90 shadow-soft backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
       )}
     >
-      <div className="container-page flex items-center justify-between gap-4">
-        <Link href="/" className="relative z-10 flex items-center gap-3">
+      <div className="container-page flex h-full items-center justify-between gap-4">
+        <Link
+          href="/"
+          onClick={() => setOpen(false)}
+          className="relative z-10 flex items-center gap-3"
+        >
           <Image
             src="/logos/tek-circle.png"
             alt="TEK at UMass Amherst"
@@ -149,6 +157,7 @@ export function Navbar() {
                 >
                   <Link
                     href={link.href}
+                    onClick={() => setOpen(false)}
                     className={cn(
                       "block rounded-xl px-4 py-3 text-2xl font-semibold tracking-tight",
                       pathname === link.href
@@ -167,7 +176,9 @@ export function Navbar() {
                 className="mt-6 px-4"
               >
                 <Button asChild size="lg" className="w-full">
-                  <Link href="/recruitment">Join TEK</Link>
+                  <Link href="/recruitment" onClick={() => setOpen(false)}>
+                    Join TEK
+                  </Link>
                 </Button>
               </motion.div>
             </nav>

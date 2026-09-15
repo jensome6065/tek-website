@@ -34,7 +34,10 @@ export function CompanyLogoCard({ company }: CompanyLogoCardProps) {
               alt=""
               width={104}
               height={28}
-              className="h-6 w-auto max-w-[5.5rem] object-contain sm:h-7 sm:max-w-[6.5rem]"
+              sizes="104px"
+              loading="lazy"
+              className="h-auto max-h-6 w-auto max-w-[5.5rem] object-contain sm:max-h-7 sm:max-w-[6.5rem]"
+              style={{ width: "auto", height: "auto" }}
               onError={() => setFailed(true)}
             />
           ) : (
