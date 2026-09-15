@@ -7,6 +7,7 @@ import { DinoCursor } from "@/components/layout/dino-cursor";
 import { DinoEasterEgg } from "@/components/shared/dino-easter-egg";
 import { SkipToContent } from "@/components/layout/skip-to-content";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -92,6 +93,7 @@ export default function RootLayout({
           <DinoCursor />
           <DinoEasterEgg />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
