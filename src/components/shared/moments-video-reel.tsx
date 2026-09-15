@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/icons";
 import { socialLinks } from "@/lib/data/navigation";
@@ -95,12 +94,8 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
   };
 
   return (
-    <motion.aside
+    <aside
       ref={containerRef}
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className={cn("flex h-full flex-col", className)}
     >
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -228,6 +223,6 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
       >
         View on Instagram →
       </Link>
-    </motion.aside>
+    </aside>
   );
 }

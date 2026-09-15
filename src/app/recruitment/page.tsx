@@ -34,7 +34,7 @@ export default function RecruitmentPage() {
             <SectionHeader
               eyebrow="The process"
               title="How recruitment works"
-              description="Thoughtful steps designed to help us get to know each other - not to stress you out."
+              description="Open events for anyone interested, then invite-only closed events - designed to help us get to know each other, not to stress you out."
             />
             <Button asChild size="lg" className="shrink-0 self-start">
               <Link href="/contact">Express interest</Link>
@@ -51,7 +51,7 @@ export default function RecruitmentPage() {
           <SectionHeader
             eyebrow="Mark your calendar"
             title="Important dates"
-            description="Fall recruitment timeline. Dates may shift slightly - follow us for the latest."
+            description="Dates will be announced soon. Follow us for the latest on applications and events."
           />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {importantDates.map((item, index) => (

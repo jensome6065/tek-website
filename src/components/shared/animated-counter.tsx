@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { useInView, useMotionValue, useSpring } from "framer-motion";
 
 interface AnimatedCounterProps {
   value: number;
@@ -34,19 +34,12 @@ export function AnimatedCounter({
   }, [spring]);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="text-center"
-    >
+    <div ref={ref} className="text-center">
       <p className="text-3xl font-semibold tracking-tight text-dark-neutral sm:text-4xl lg:text-5xl">
         {display}
         {suffix}
       </p>
       <p className="mt-2 text-sm font-medium text-muted sm:text-base">{label}</p>
-    </motion.div>
+    </div>
   );
 }

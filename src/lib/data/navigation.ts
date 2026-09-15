@@ -23,5 +23,5 @@ export const footerLinks = {
 export const socialLinks = {
   instagram: "https://instagram.com/umasstek",
   linkedin: "https://linkedin.com/company/umasstek",
-  email: "mailto:tek@umass.edu",
+  email: "mailto:tek-rso@umass.edu",
 } as const;

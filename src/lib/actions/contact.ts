@@ -33,9 +33,9 @@ export async function submitContactForm(
 
   const data = parsed.data;
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL ?? "tek@umass.edu";
+  const toEmail = process.env.CONTACT_TO_EMAIL ?? "tek-rso@umass.edu";
   const fromEmail =
-    process.env.CONTACT_FROM_EMAIL ?? "TEK Website <onboarding@resend.dev>";
+    process.env.CONTACT_FROM_EMAIL ?? "TEK Website <contact@umasstek.com>";
 
   if (!apiKey) {
     console.info("Contact form submission (Resend not configured):", data);

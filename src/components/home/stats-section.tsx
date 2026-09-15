@@ -1,6 +1,10 @@
 import { communityStats } from "@/lib/data/stats";
 import { AnimatedCounter } from "@/components/shared/animated-counter";
-import { AnimatedReveal } from "@/components/shared/animated-reveal";
+import {
+  AnimatedReveal,
+  StaggerItem,
+  StaggerReveal,
+} from "@/components/shared/animated-reveal";
 
 export function StatsSection() {
   return (
@@ -18,17 +22,22 @@ export function StatsSection() {
             join.
           </p>
         </AnimatedReveal>
-        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 sm:gap-x-14 lg:gap-x-16">
+
+        <StaggerReveal
+          className="flex flex-wrap justify-center gap-x-10 gap-y-10 sm:gap-x-14 lg:gap-x-16"
+          delay={0.12}
+          stagger={0.1}
+        >
           {communityStats.map((stat) => (
-            <div key={stat.id} className="w-36 sm:w-40">
+            <StaggerItem key={stat.id} className="w-36 sm:w-40">
               <AnimatedCounter
                 value={stat.value}
                 suffix={stat.suffix}
                 label={stat.label}
               />
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerReveal>
       </div>
     </section>
   );

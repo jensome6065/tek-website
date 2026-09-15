@@ -108,7 +108,7 @@ export function Footer() {
               href={socialLinks.email}
               className="mt-4 inline-block text-sm font-medium text-maroon hover:underline"
             >
-              tek@umass.edu
+              tek-rso@umass.edu
             </a>
           </div>
         </div>

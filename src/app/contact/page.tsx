@@ -16,7 +16,7 @@ const contactDetails = [
   {
     icon: Mail,
     label: "General Email",
-    value: "tek@umass.edu",
+    value: "tek-rso@umass.edu",
     href: socialLinks.email,
   },
   {

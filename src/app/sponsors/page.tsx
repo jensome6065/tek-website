@@ -15,7 +15,11 @@ import {
 import { sponsorStats } from "@/lib/data/stats";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeader } from "@/components/shared/section-header";
-import { AnimatedReveal } from "@/components/shared/animated-reveal";
+import {
+  AnimatedReveal,
+  StaggerItem,
+  StaggerReveal,
+} from "@/components/shared/animated-reveal";
 import { AnimatedCounter } from "@/components/shared/animated-counter";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -95,9 +99,13 @@ export default function SponsorsPage() {
             title="A young chapter with real momentum"
             description="Founded in 2025 as the first professional and social technology community at UMass Amherst - with rapid semester-over-semester growth."
           />
-          <div className="mt-12 grid grid-cols-2 gap-8 lg:grid-cols-4">
+          <StaggerReveal
+            className="mt-12 grid grid-cols-2 gap-8 lg:grid-cols-4"
+            delay={0.1}
+            stagger={0.08}
+          >
             {sponsorStats.map((stat) => (
-              <div key={stat.id} className="text-center">
+              <StaggerItem key={stat.id} className="text-center">
                 <AnimatedCounter
                   value={stat.value}
                   suffix={stat.suffix}
@@ -106,9 +114,9 @@ export default function SponsorsPage() {
                 {stat.detail ? (
                   <p className="mt-2 text-sm text-muted">{stat.detail}</p>
                 ) : null}
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerReveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
             {tekHighlights.map((item, index) => (
               <AnimatedReveal

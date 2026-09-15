@@ -56,7 +56,7 @@ export function CommunityImpact() {
         </AnimatedReveal>
       </div>
 
-      <div className="relative">
+      <AnimatedReveal delay={0.15} className="relative">
         <div
           className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-background-warm to-transparent sm:w-20"
           aria-hidden
@@ -70,7 +70,7 @@ export function CommunityImpact() {
           <LogoMarqueeRow companies={rowOne} direction="left" duration={55} />
           <LogoMarqueeRow companies={rowTwo} direction="right" duration={60} />
         </div>
-      </div>
+      </AnimatedReveal>
     </section>
   );
 }

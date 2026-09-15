@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Calendar, Clock, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import type { TekEvent } from "@/lib/data/events";
@@ -32,11 +33,25 @@ export function EventCard({ event, index = 0 }: EventCardProps) {
     >
       <div
         className={cn(
-          "relative h-36 bg-gradient-to-br p-5",
-          event.imageGradient
+          "relative h-48 overflow-hidden p-5",
+          event.image
+            ? "bg-dark-neutral"
+            : `bg-gradient-to-br ${event.imageGradient}`
         )}
       >
-        <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+        {event.image && (
+          <Image
+            src={event.image}
+            alt={event.title}
+            fill
+            className={cn(
+              "object-cover transition-transform duration-500 group-hover:scale-105",
+              event.imagePosition
+            )}
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        )}
+        <span className="relative z-10 inline-flex rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
           {categoryLabels[event.category]}
         </span>
       </div>
@@ -44,9 +59,6 @@ export function EventCard({ event, index = 0 }: EventCardProps) {
         <h3 className="text-xl font-semibold tracking-tight text-dark-neutral group-hover:text-dark-blue transition-colors">
           {event.title}
         </h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-          {event.description}
-        </p>
         <ul className="mt-5 space-y-2 text-sm text-dark-neutral/80">
           <li className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-medium-blue" aria-hidden />

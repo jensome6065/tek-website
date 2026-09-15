@@ -10,6 +10,8 @@ export interface TekEvent {
   category: Exclude<EventCategory, "all">;
   status: "upcoming" | "past";
   imageGradient: string;
+  image?: string;
+  imagePosition?: string;
   resources?: { label: string; href: string }[];
 }
 
@@ -34,10 +36,11 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[0],
+    image: "/photos/events/summer-retreat.jpg",
   },
   {
     id: "game-night-big-little-2026",
-    title: "TEK Game Night & Big-Little Reveal",
+    title: "TEK Big-Little Reveal",
     date: "May 1, 2026",
     time: "7:00 PM - 9:30 PM",
     location: "Maple",
@@ -46,6 +49,7 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[1],
+    image: "/photos/events/big-little.jpg",
   },
   {
     id: "tek-x-vc-2026",
@@ -58,21 +62,23 @@ export const events: TekEvent[] = [
     category: "professional",
     status: "past",
     imageGradient: gradients[2],
+    image: "/photos/events/tek-x-vc.jpg",
   },
   {
     id: "basketball-tournament-2026",
-    title: "TEK Social: Basketball Tournament",
+    title: "TEK Basketball Tournament",
     date: "April 27, 2026",
     time: "7:00 PM - 8:30 PM",
-    location: "Central outdoor basketball court",
+    location: "Central",
     description: "Friendly competition and community energy on the court.",
     category: "social",
     status: "past",
     imageGradient: gradients[3],
+    image: "/photos/events/basketball-tournament.jpg",
   },
   {
     id: "hike-lake-lunch-2026",
-    title: "TEK Social: Hike + Lake Lunch",
+    title: "TEK Hike + Lake Lunch",
     date: "April 25, 2026",
     time: "10:00 AM - 2:00 PM",
     location: "Mount Holyoke",
@@ -81,17 +87,19 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[4],
+    image: "/photos/events/hike-lake-lunch.jpg",
   },
   {
     id: "bid-night-2026",
     title: "TEK Bid Night",
     date: "April 24, 2026",
     time: "6:00 PM - 7:30 PM",
-    location: "Manning Building",
+    location: "CS Building",
     description: "The night new members officially join the TEK family.",
     category: "social",
     status: "past",
     imageGradient: gradients[5],
+    image: "/photos/events/bid-night.jpg",
   },
   {
     id: "resume-review-2026",
@@ -104,10 +112,24 @@ export const events: TekEvent[] = [
     category: "professional",
     status: "past",
     imageGradient: gradients[0],
+    image: "/photos/events/resume-review.jpg",
+  },
+  {
+    id: "theta-tau-cleanup-2026",
+    title: "TEK x Theta Tau Cleanup",
+    date: "April 18, 2026",
+    time: "9:00 AM - 12:00 PM",
+    location: "Various locations around campus",
+    description:
+      "Giving back with Theta Tau - cleaning up campus and the surrounding community.",
+    category: "social",
+    status: "past",
+    imageGradient: gradients[1],
+    image: "/photos/events/theta-tau-cleanup.jpg",
   },
   {
     id: "open-recruitment-3-2026",
-    title: "TEK Open Recruitment #3: Casino Night",
+    title: "TEK Casino Night",
     date: "March 30, 2026",
     time: "6:00 PM - 8:00 PM",
     location: "ILC",
@@ -116,10 +138,11 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[1],
+    image: "/photos/events/casino-night.jpg",
   },
   {
     id: "open-recruitment-2-2026",
-    title: "TEK Open Recruitment #2: Jeopardy",
+    title: "TEK Jeopardy",
     date: "March 26, 2026",
     time: "6:00 PM - 8:00 PM",
     location: "ILC",
@@ -128,10 +151,11 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[2],
+    image: "/photos/events/jeopardy.jpg",
   },
   {
     id: "open-recruitment-1-2026",
-    title: "TEK Open Recruitment #1: Panel + Networking",
+    title: "TEK Panel + Networking",
     date: "March 25, 2026",
     time: "6:00 PM - 8:00 PM",
     location: "ILC",
@@ -140,41 +164,20 @@ export const events: TekEvent[] = [
     category: "professional",
     status: "past",
     imageGradient: gradients[3],
-  },
-  {
-    id: "poker-night-2026",
-    title: "TEK Poker Night",
-    date: "March 6, 2026",
-    time: "8:30 PM - 10:00 PM",
-    location: "Elm",
-    description: "Cards, conversation, and a late-night hang with TEK.",
-    category: "social",
-    status: "past",
-    imageGradient: gradients[4],
+    image: "/photos/events/panel-networking.jpg",
   },
   {
     id: "fireside-clarinda-2026",
     title: "TEK Fireside Chat with Clarinda",
     date: "March 6, 2026",
     time: "7:15 PM - 8:30 PM",
-    location: "AWS",
+    location: "Elm",
     description:
       "An intimate fireside chat with Clarinda on careers and life in tech at AWS.",
     category: "professional",
     status: "past",
     imageGradient: gradients[5],
-  },
-  {
-    id: "study-night-elm-2026",
-    title: "TEK Study Night",
-    date: "February 18, 2026",
-    time: "7:15 PM - 9:00 PM",
-    location: "Elm",
-    description:
-      "Focused study time with TEK - quieter grind, shared snacks, better company.",
-    category: "technical",
-    status: "past",
-    imageGradient: gradients[0],
+    image: "/photos/events/fireside-clarinda.jpg",
   },
   {
     id: "white-elephant-2025",
@@ -186,6 +189,8 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[1],
+    image: "/photos/events/white-elephant.jpg",
+    imagePosition: "object-[center_82%]",
   },
   {
     id: "volleyball-semis-2025",
@@ -197,6 +202,7 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[2],
+    image: "/photos/events/volleyball-playoffs.jpg",
   },
   {
     id: "volleyball-playoffs-2025",
@@ -208,29 +214,7 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[3],
-  },
-  {
-    id: "rock-climbing-ascend-2025",
-    title: "TEK Rock Climbing / Study",
-    date: "October 22, 2025",
-    time: "7:00 PM - 8:00 PM",
-    location: "Ascend",
-    description:
-      "Climb, then reset with study time - a hybrid night at Ascend.",
-    category: "social",
-    status: "past",
-    imageGradient: gradients[4],
-  },
-  {
-    id: "study-night-union-2025",
-    title: "TEK Study Night",
-    date: "October 7, 2025",
-    time: "8:00 PM - 9:00 PM",
-    location: "Student Union",
-    description: "Mid-semester study night with people who get the grind.",
-    category: "technical",
-    status: "past",
-    imageGradient: gradients[5],
+    image: "/photos/events/volleyball-semis.jpg",
   },
   {
     id: "instacart-cto-2025",
@@ -243,6 +227,8 @@ export const events: TekEvent[] = [
     category: "professional",
     status: "past",
     imageGradient: gradients[0],
+    image: "/photos/events/instacart-cto.jpg",
+    imagePosition: "object-[center_55%]",
   },
   {
     id: "volleyball-game-2025",
@@ -254,6 +240,7 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[1],
+    image: "/photos/events/volleyball-game.jpg",
   },
   {
     id: "professional-pictures-2025",
@@ -266,6 +253,7 @@ export const events: TekEvent[] = [
     category: "professional",
     status: "past",
     imageGradient: gradients[2],
+    image: "/photos/events/professional-pictures.jpg",
   },
   {
     id: "eboard-hike-2025",
@@ -277,6 +265,8 @@ export const events: TekEvent[] = [
     category: "social",
     status: "past",
     imageGradient: gradients[3],
+    image: "/photos/events/eboard-hike.jpg",
+    imagePosition: "object-[center_42%]",
   },
 ];
 

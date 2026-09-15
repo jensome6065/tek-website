@@ -1,32 +1,27 @@
-/** Homepage live signal — set `active: false` to hide the strip. */
+/** Homepage live signal - set `active: false` to hide the strip. */
 export const recruitmentSignal = {
   active: true,
   label: "Fall '26 Recruitment",
-  detail: "Beta class releases soon",
+  detail: "Beta class recruitment soon",
   href: "/recruitment",
   cta: "Learn more",
 } as const;
 
 export const recruitmentSteps = [
   {
-    title: "Interest Form",
-    description:
-      "Tell us a bit about yourself. No pressure - just the first step toward joining.",
-  },
-  {
-    title: "Info Session",
-    description:
-      "Learn what TEK is about, meet members, and ask anything on your mind.",
-  },
-  {
-    title: "Networking Night",
-    description:
-      "Connect with current members in a relaxed setting. Be yourself.",
-  },
-  {
     title: "Application",
     description:
-      "Share your story, interests, and what you hope to contribute to the community.",
+      "Share your story, interests, and why you want to join TEK. Follow us for the link when applications open.",
+  },
+  {
+    title: "Open Events",
+    description:
+      "Attend our open recruitment events to meet members and learn what TEK is about.",
+  },
+  {
+    title: "Closed Events",
+    description:
+      "Invite-only events for applicants advancing past open recruitment. A closer look at TEK before decisions.",
   },
   {
     title: "Interviews",
@@ -38,20 +33,14 @@ export const recruitmentSteps = [
     description:
       "If it's a mutual fit, you'll receive an invitation to join TEK.",
   },
-  {
-    title: "Welcome to TEK",
-    description:
-      "Orientation, family placement, and the start of something lasting.",
-  },
 ];
 
 export const importantDates = [
-  { label: "Interest Form Opens", date: "August 25, 2026" },
-  { label: "Info Sessions", date: "September 2-4, 2026" },
-  { label: "Networking Night", date: "September 8, 2026" },
-  { label: "Applications Due", date: "September 12, 2026" },
-  { label: "Interviews", date: "September 15-19, 2026" },
-  { label: "Offers Released", date: "September 22, 2026" },
+  { label: "Applications Due", date: "TBA" },
+  { label: "Open Events", date: "TBA" },
+  { label: "Closed Events", date: "TBA" },
+  { label: "Interviews", date: "TBA" },
+  { label: "Offers Released", date: "TBA" },
 ];
 
 export const recruitmentFaqs = [
@@ -73,12 +62,17 @@ export const recruitmentFaqs = [
   {
     question: "What does the application process look like?",
     answer:
-      "Interest form, info session, networking night, written application, and a conversational interview. We designed it to be thoughtful - not stressful.",
+      "Apply, attend open events, then invite-only closed events and interviews. We designed it to be thoughtful - not stressful.",
+  },
+  {
+    question: "What's the difference between open and closed events?",
+    answer:
+      "Open events are for anyone interested in joining. Closed events are invite-only for applicants who advance past open recruitment.",
   },
   {
     question: "When does recruitment happen?",
     answer:
-      "We recruit primarily at the start of the fall semester, with limited opportunities in the spring depending on capacity.",
+      "We recruit primarily at the start of the fall semester, with opportunities in the spring depending on capacity. Exact dates will be announced soon.",
   },
   {
     question: "Can I still attend events if I'm not a member?",
