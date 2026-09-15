@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   title: "Sponsors",
   description:
     "Partner with TEK at UMass Amherst. Sponsorship tiers from Bronze to Founders Circle - support workshops, recruitment pipelines, and the next generation of tech leaders.",
+  alternates: { canonical: "/sponsors" },
 };
 
 const tierAccentStyles: Record<

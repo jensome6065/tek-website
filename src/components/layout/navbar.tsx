@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { navLinks } from "@/lib/data/navigation";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -14,7 +13,6 @@ import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const pathname = usePathname();
-  const prefersReducedMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [menuPathname, setMenuPathname] = useState(pathname);
@@ -163,69 +161,43 @@ export function Navbar() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id="mobile-nav"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation"
-            initial={prefersReducedMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={prefersReducedMotion ? undefined : { opacity: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
-            // top-16 clears the fixed header chrome so links never sit underneath it
-            className="fixed inset-x-0 top-16 bottom-0 z-0 bg-background lg:hidden"
+      {open ? (
+        <div
+          id="mobile-nav"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation"
+          className="mobile-nav-panel fixed inset-x-0 top-16 bottom-0 z-0 bg-background lg:hidden"
+        >
+          <nav
+            className="container-page flex h-full flex-col gap-1 overflow-y-auto overscroll-contain py-6"
+            aria-label="Mobile"
           >
-            <nav
-              className="container-page flex h-full flex-col gap-1 overflow-y-auto overscroll-contain py-6"
-              aria-label="Mobile"
-            >
-              {navLinks.map((link, index) => (
-                <motion.div
-                  key={link.href}
-                  initial={
-                    prefersReducedMotion ? false : { opacity: 0, y: 12 }
-                  }
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: prefersReducedMotion ? 0 : index * 0.04,
-                    duration: prefersReducedMotion ? 0 : 0.3,
-                  }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={closeMenu}
-                    className={cn(
-                      "block min-h-12 rounded-xl px-4 py-3 text-2xl font-semibold tracking-tight",
-                      pathname === link.href
-                        ? "text-dark-blue"
-                        : "text-dark-neutral"
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: prefersReducedMotion ? 0 : navLinks.length * 0.04,
-                  duration: prefersReducedMotion ? 0 : 0.3,
-                }}
-                className="mt-6 px-4 pb-4"
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={closeMenu}
+                className={cn(
+                  "block min-h-12 rounded-xl px-4 py-3 text-2xl font-semibold tracking-tight",
+                  pathname === link.href
+                    ? "text-dark-blue"
+                    : "text-dark-neutral"
+                )}
               >
-                <Button asChild size="lg" className="w-full">
-                  <Link href="/recruitment" onClick={closeMenu}>
-                    Join TEK
-                  </Link>
-                </Button>
-              </motion.div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                {link.label}
+              </Link>
+            ))}
+            <div className="mt-6 px-4 pb-4">
+              <Button asChild size="lg" className="w-full">
+                <Link href="/recruitment" onClick={closeMenu}>
+                  Join TEK
+                </Link>
+              </Button>
+            </div>
+          </nav>
+        </div>
+      ) : null}
     </header>
   );
 }

@@ -1,12 +1,36 @@
-import { MomentsGallery } from "@/components/shared/moments-gallery";
-import { MomentsVideoReel } from "@/components/shared/moments-video-reel";
+"use client";
+
+import dynamic from "next/dynamic";
 import { SectionHeader } from "@/components/shared/section-header";
-import {
-  StaggerItem,
-  StaggerReveal,
-} from "@/components/shared/animated-reveal";
 import { momentPhotos } from "@/lib/data/moments";
 import { momentVideos } from "@/lib/data/moment-videos";
+
+const MomentsVideoReel = dynamic(
+  () =>
+    import("@/components/shared/moments-video-reel").then(
+      (mod) => mod.MomentsVideoReel
+    ),
+  {
+    loading: () => (
+      <div
+        className="aspect-[9/16] w-full max-w-[17.5rem] rounded-[1.75rem] bg-brand/10"
+        aria-hidden
+      />
+    ),
+  }
+);
+
+const MomentsGallery = dynamic(
+  () =>
+    import("@/components/shared/moments-gallery").then(
+      (mod) => mod.MomentsGallery
+    ),
+  {
+    loading: () => (
+      <div className="min-h-[28rem] rounded-2xl bg-brand/5" aria-hidden />
+    ),
+  }
+);
 
 export function PhotoStorytelling() {
   return (
@@ -19,18 +43,12 @@ export function PhotoStorytelling() {
           className="mb-8"
         />
 
-        <StaggerReveal
-          className="grid items-start gap-6 lg:grid-cols-[17.5rem_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[19rem_minmax(0,1fr)]"
-          delay={0.1}
-          stagger={0.14}
-        >
-          <StaggerItem className="lg:sticky lg:top-28">
+        <div className="grid items-start gap-6 lg:grid-cols-[17.5rem_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[19rem_minmax(0,1fr)]">
+          <div className="lg:sticky lg:top-28">
             <MomentsVideoReel videos={momentVideos} />
-          </StaggerItem>
-          <StaggerItem>
-            <MomentsGallery photos={momentPhotos} />
-          </StaggerItem>
-        </StaggerReveal>
+          </div>
+          <MomentsGallery photos={momentPhotos} />
+        </div>
       </div>
     </section>
   );

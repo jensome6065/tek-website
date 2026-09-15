@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Get in touch with TEK at UMass Amherst - for recruitment, partnerships, sponsorships, speaking, or general questions.",
+  alternates: { canonical: "/contact" },
 };
 
 const contactDetails = [

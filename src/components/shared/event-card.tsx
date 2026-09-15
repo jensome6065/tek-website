@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Calendar, Clock, MapPin } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 import type { TekEvent } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 
@@ -17,22 +16,9 @@ const categoryLabels = {
   technical: "Technical",
 };
 
-export function EventCard({ event, index = 0 }: EventCardProps) {
-  const prefersReducedMotion = useReducedMotion();
-
+export function EventCard({ event }: EventCardProps) {
   return (
-    <motion.article
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{
-        duration: prefersReducedMotion ? 0 : 0.5,
-        delay: prefersReducedMotion ? 0 : index * 0.08,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      whileHover={prefersReducedMotion ? undefined : { y: -4 }}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-soft transition-shadow duration-300 hover:shadow-elevated"
-    >
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-soft transition-shadow duration-300 hover:shadow-elevated hover:-translate-y-1 motion-reduce:hover:translate-y-0">
       <div
         className={cn(
           "relative h-48 overflow-hidden p-5",
@@ -47,7 +33,7 @@ export function EventCard({ event, index = 0 }: EventCardProps) {
             alt={event.title}
             fill
             className={cn(
-              "object-cover transition-transform duration-500 group-hover:scale-105",
+              "object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:group-hover:scale-100",
               event.imagePosition
             )}
             sizes="(max-width: 768px) 100vw, 33vw"
@@ -58,7 +44,7 @@ export function EventCard({ event, index = 0 }: EventCardProps) {
         </span>
       </div>
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="text-xl font-semibold tracking-tight text-dark-neutral group-hover:text-dark-blue transition-colors">
+        <h3 className="text-xl font-semibold tracking-tight text-dark-neutral transition-colors group-hover:text-dark-blue">
           {event.title}
         </h3>
         <ul className="mt-5 space-y-2 text-sm text-dark-neutral/80">
@@ -89,6 +75,6 @@ export function EventCard({ event, index = 0 }: EventCardProps) {
           </div>
         )}
       </div>
-    </motion.article>
+    </article>
   );
 }

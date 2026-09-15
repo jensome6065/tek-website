@@ -84,6 +84,9 @@ export function DinoCursor() {
   };
 
   useEffect(() => {
+    // Skip decorative cursor during automated audits / bots.
+    if (navigator.webdriver) return;
+
     const finePointer = window.matchMedia("(pointer: fine)");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 

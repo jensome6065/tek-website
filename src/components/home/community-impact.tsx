@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { featuredCompanies } from "@/lib/data/companies";
 import { CompanyLogoCard } from "@/components/home/company-logo-card";
-import { AnimatedReveal } from "@/components/shared/animated-reveal";
 
 function LogoMarqueeRow({
   companies,
@@ -13,24 +13,54 @@ function LogoMarqueeRow({
   direction?: "left" | "right";
   duration?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setActive(true);
+      },
+      { rootMargin: "120px 0px", threshold: 0.05 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="logo-marquee group/row relative overflow-hidden">
+    <div
+      ref={ref}
+      className="logo-marquee group/row relative overflow-hidden"
+      style={{
+        maskImage:
+          "linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent)",
+      }}
+    >
       <ul
-        className="flex w-max gap-2.5 py-1"
+        className="flex w-max gap-6 py-1"
         style={{
-          animation: `logo-marquee-${direction} ${duration}s linear infinite`,
+          animation: active
+            ? `logo-marquee-${direction} ${duration}s linear infinite`
+            : "none",
         }}
       >
         {companies.map((company) => (
           <CompanyLogoCard key={company.id} company={company} />
         ))}
-        {companies.map((company) => (
-          <CompanyLogoCard
-            key={`dup-${company.id}`}
-            company={company}
-            decorative
-          />
-        ))}
+        {/* Only mount loop clones once the row is near the viewport */}
+        {active
+          ? companies.map((company) => (
+              <CompanyLogoCard
+                key={`dup-${company.id}`}
+                company={company}
+                decorative
+              />
+            ))
+          : null}
       </ul>
     </div>
   );
@@ -44,7 +74,7 @@ export function CommunityImpact() {
   return (
     <section className="overflow-hidden bg-background-warm py-14 sm:py-16">
       <div className="container-page">
-        <AnimatedReveal className="mx-auto mb-8 max-w-2xl text-center">
+        <div className="mx-auto mb-8 max-w-2xl text-center">
           <p className="text-sm font-medium tracking-wide text-medium-blue uppercase">
             Placements
           </p>
@@ -55,24 +85,15 @@ export function CommunityImpact() {
             Members building across tech, finance, healthcare, research, and
             startups.
           </p>
-        </AnimatedReveal>
+        </div>
       </div>
 
-      <AnimatedReveal delay={0.15} className="relative">
-        <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-background-warm to-transparent sm:w-20"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-background-warm to-transparent sm:w-20"
-          aria-hidden
-        />
-
-        <div className="flex flex-col gap-2.5">
+      <div className="relative">
+        <div className="flex flex-col gap-6">
           <LogoMarqueeRow companies={rowOne} direction="left" duration={55} />
           <LogoMarqueeRow companies={rowTwo} direction="right" duration={60} />
         </div>
-      </AnimatedReveal>
+      </div>
     </section>
   );
 }

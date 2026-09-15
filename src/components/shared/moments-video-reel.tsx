@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX, Play, Pause } from "lucide-react";
+import { Volume2, VolumeX, Play, Pause, ChevronLeft, ChevronRight } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/icons";
 import { socialLinks } from "@/lib/data/navigation";
 import type { MomentVideo } from "@/lib/data/moment-videos";
@@ -21,7 +21,7 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
   const [isInView, setIsInView] = useState(false);
   const [muted, setMuted] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [userPlaying, setUserPlaying] = useState(false);
+  const [userPaused, setUserPaused] = useState(false);
   /** Defer attaching any MP4 sources until the reel is near the viewport. */
   const [shouldLoad, setShouldLoad] = useState(false);
 
@@ -30,7 +30,10 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReducedMotion(media.matches);
+    const update = () => {
+      setReducedMotion(media.matches);
+      if (media.matches) setUserPaused(true);
+    };
     update();
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
@@ -83,9 +86,19 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
         i === index &&
         isInView &&
         shouldLoad &&
-        (!reducedMotion || userPlaying);
+        !userPaused &&
+        !reducedMotion;
 
-      if (shouldPlay) {
+      // Respect reduced motion: only play after explicit user gesture (userPaused=false + click sets playing via toggle).
+      const reducedPlay =
+        i === index &&
+        isInView &&
+        shouldLoad &&
+        reducedMotion &&
+        !userPaused &&
+        video.dataset.userStarted === "1";
+
+      if (shouldPlay || reducedPlay) {
         video.play().catch(() => {
           // Autoplay can fail until muted / user gesture.
         });
@@ -100,20 +113,21 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
     reducedMotion,
     muted,
     shouldLoad,
-    userPlaying,
+    userPaused,
   ]);
 
   const togglePlayback = () => {
     const video = videoRefs.current[index];
     if (!video) {
-      setUserPlaying((value) => !value);
+      setUserPaused((value) => !value);
       return;
     }
     if (video.paused) {
-      setUserPlaying(true);
+      video.dataset.userStarted = "1";
+      setUserPaused(false);
       video.play().catch(() => {});
     } else {
-      setUserPlaying(false);
+      setUserPaused(true);
       video.pause();
     }
   };
@@ -165,10 +179,9 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
               aria-label="Instagram video gallery"
             >
               {videos.map((video, i) => {
-                const nearActive = Math.abs(i - index) <= 1;
-                const attachSrc = shouldLoad && nearActive;
-                // No poster/MP4 network cost until the reel is near the viewport.
-                const showPoster = shouldLoad && nearActive;
+                // Only attach the active video source to limit MP4 bandwidth.
+                const attachSrc = shouldLoad && i === index;
+                const showPoster = shouldLoad && Math.abs(i - index) <= 1;
 
                 return (
                   <div
@@ -199,7 +212,7 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
                         playsInline
                         muted={muted}
                         loop={videos.length === 1}
-                        preload={i === index ? "metadata" : "none"}
+                        preload="metadata"
                         onEnded={() => {
                           if (videos.length > 1) {
                             scrollToIndex((i + 1) % videos.length);
@@ -219,47 +232,52 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
                   <p className="truncate text-sm font-medium text-white drop-shadow-sm">
                     {current?.label}
                   </p>
-                  {videos.length > 1 && (
-                    <div className="mt-2.5 flex gap-1">
-                      {videos.map((video, i) => (
-                        <button
-                          key={video.id}
-                          type="button"
-                          onClick={() => scrollToIndex(i)}
-                          className="inline-flex h-11 min-w-11 items-center justify-center"
-                          aria-label={`Go to ${video.label}`}
-                          aria-current={i === index ? "true" : undefined}
-                        >
-                          <span
-                            className={cn(
-                              "h-1 rounded-full transition-all",
-                              i === index
-                                ? "w-5 bg-white"
-                                : "w-1.5 bg-white/40"
-                            )}
-                            aria-hidden
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  {videos.length > 1 ? (
+                    <p className="mt-1.5 text-xs text-white/70" aria-live="polite">
+                      {index + 1} / {videos.length}
+                    </p>
+                  ) : null}
                 </div>
 
                 <div className="flex shrink-0 gap-2">
-                  {reducedMotion ? (
-                    <button
-                      type="button"
-                      onClick={togglePlayback}
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
-                      aria-label={userPlaying ? "Pause video" : "Play video"}
-                    >
-                      {userPlaying ? (
-                        <Pause className="h-4 w-4" aria-hidden />
-                      ) : (
-                        <Play className="h-4 w-4" aria-hidden />
-                      )}
-                    </button>
+                  {videos.length > 1 ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          scrollToIndex(
+                            (index - 1 + videos.length) % videos.length
+                          )
+                        }
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+                        aria-label="Previous video"
+                      >
+                        <ChevronLeft className="h-5 w-5" aria-hidden />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          scrollToIndex((index + 1) % videos.length)
+                        }
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+                        aria-label="Next video"
+                      >
+                        <ChevronRight className="h-5 w-5" aria-hidden />
+                      </button>
+                    </>
                   ) : null}
+                  <button
+                    type="button"
+                    onClick={togglePlayback}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+                    aria-label={userPaused ? "Play video" : "Pause video"}
+                  >
+                    {userPaused ? (
+                      <Play className="h-4 w-4" aria-hidden />
+                    ) : (
+                      <Pause className="h-4 w-4" aria-hidden />
+                    )}
+                  </button>
                   <button
                     type="button"
                     onClick={() => setMuted((value) => !value)}

@@ -1,27 +1,21 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { type ReactNode } from "react";
+import {
+  type CSSProperties,
+  type ElementType,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
-const defaultVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const staggerItemVariants: Variants = {
-  hidden: { opacity: 0, y: 22 },
-  visible: { opacity: 1, y: 0 },
-};
 
 interface AnimatedRevealProps {
   children: ReactNode;
   className?: string;
   delay?: number;
   duration?: number;
-  variants?: Variants;
   as?: "div" | "section" | "article" | "li" | "span";
 }
 
@@ -29,31 +23,50 @@ export function AnimatedReveal({
   children,
   className,
   delay = 0,
-  duration = 0.6,
-  variants = defaultVariants,
   as = "div",
 }: AnimatedRevealProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const classNames = cn(className);
+  const Tag = as as ElementType;
+  const ref = useRef<HTMLElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [visible, setVisible] = useState(prefersReducedMotion);
 
-  if (prefersReducedMotion) {
-    const Tag = as;
-    return <Tag className={classNames}>{children}</Tag>;
-  }
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setVisible(true);
+      return;
+    }
+    const node = ref.current;
+    if (!node) return;
 
-  const Component = motion[as];
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-60px", threshold: 0.08 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [prefersReducedMotion]);
 
   return (
-    <Component
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration, delay, ease }}
-      variants={variants}
-      className={classNames}
+    <Tag
+      ref={ref}
+      className={cn(
+        "reveal-fade",
+        visible && "reveal-fade--visible",
+        className
+      )}
+      style={
+        delay
+          ? ({ "--reveal-delay": `${delay}s` } as CSSProperties)
+          : undefined
+      }
     >
       {children}
-    </Component>
+    </Tag>
   );
 }
 
@@ -73,34 +86,49 @@ export function StaggerReveal({
   stagger = 0.1,
   as = "div",
 }: StaggerRevealProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const classNames = cn(className);
+  const Tag = as as ElementType;
+  const ref = useRef<HTMLElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [visible, setVisible] = useState(prefersReducedMotion);
 
-  if (prefersReducedMotion) {
-    const Tag = as;
-    return <Tag className={classNames}>{children}</Tag>;
-  }
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setVisible(true);
+      return;
+    }
+    const node = ref.current;
+    if (!node) return;
 
-  const Component = motion[as];
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-60px", threshold: 0.08 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [prefersReducedMotion]);
 
   return (
-    <Component
-      className={classNames}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-60px" }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: stagger,
-            delayChildren: delay,
-          },
-        },
-      }}
+    <Tag
+      ref={ref}
+      className={cn(
+        "reveal-stagger",
+        visible && "reveal-stagger--visible",
+        className
+      )}
+      style={
+        {
+          "--reveal-delay": `${delay}s`,
+          "--reveal-stagger": `${stagger}s`,
+        } as CSSProperties
+      }
     >
       {children}
-    </Component>
+    </Tag>
   );
 }
 
@@ -115,23 +143,6 @@ export function StaggerItem({
   className,
   as = "div",
 }: StaggerItemProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const classNames = cn(className);
-
-  if (prefersReducedMotion) {
-    const Tag = as;
-    return <Tag className={classNames}>{children}</Tag>;
-  }
-
-  const Component = motion[as];
-
-  return (
-    <Component
-      className={classNames}
-      variants={staggerItemVariants}
-      transition={{ duration: 0.55, ease }}
-    >
-      {children}
-    </Component>
-  );
+  const Tag = as as ElementType;
+  return <Tag className={cn("reveal-stagger__item", className)}>{children}</Tag>;
 }

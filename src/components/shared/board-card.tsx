@@ -1,7 +1,6 @@
 "use client";
 
 import { Mail } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 import type { BoardMember } from "@/lib/data/members";
 import { MemberAvatar } from "@/components/members/member-avatar";
 import { LinkedInIcon } from "@/components/ui/icons";
@@ -11,21 +10,9 @@ interface BoardCardProps {
   index?: number;
 }
 
-export function BoardCard({ member, index = 0 }: BoardCardProps) {
-  const prefersReducedMotion = useReducedMotion();
-
+export function BoardCard({ member }: BoardCardProps) {
   return (
-    <motion.article
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{
-        duration: prefersReducedMotion ? 0 : 0.5,
-        delay: prefersReducedMotion ? 0 : index * 0.06,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className="group relative overflow-hidden rounded-2xl bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated"
-    >
+    <article className="group relative overflow-hidden rounded-2xl bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-elevated motion-reduce:hover:translate-y-0">
       <MemberAvatar
         name={member.name}
         photo={member.photo}
@@ -64,6 +51,6 @@ export function BoardCard({ member, index = 0 }: BoardCardProps) {
           </a>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

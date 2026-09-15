@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Members",
   description:
     "Meet the TEK community - executive board and the people who make TEK feel like home.",
+  alternates: { canonical: "/members" },
 };
 
 export default function MembersPage() {

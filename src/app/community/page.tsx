@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Community",
   description:
     "Explore TEK life - events, hangouts, and what's happening next at UMass Amherst.",
+  alternates: { canonical: "/community" },
 };
 
 export default function CommunityPage() {

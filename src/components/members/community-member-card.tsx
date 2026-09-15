@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import type { CommunityMember } from "@/lib/data/members";
 import { MemberAvatar } from "@/components/members/member-avatar";
 import { cn } from "@/lib/utils";
@@ -18,33 +17,16 @@ const cohortLabels = {
 const cardClassName =
   "block overflow-hidden rounded-2xl bg-card shadow-soft transition-shadow duration-300";
 
-export function CommunityMemberCard({
-  member,
-  index = 0,
-}: CommunityMemberCardProps) {
-  const prefersReducedMotion = useReducedMotion();
+export function CommunityMemberCard({ member }: CommunityMemberCardProps) {
   const isInactive = member.status === "inactive";
   const hasLinkedIn = Boolean(member.linkedin);
 
-  const motionProps = {
-    initial: prefersReducedMotion ? false : { opacity: 0, y: 16 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-40px" },
-    transition: {
-      duration: prefersReducedMotion ? 0 : 0.45,
-      delay: prefersReducedMotion ? 0 : index * 0.04,
-      ease: [0.22, 1, 0.36, 1] as const,
-    },
-    whileHover:
-      !prefersReducedMotion && hasLinkedIn && !isInactive
-        ? { y: -3 }
-        : undefined,
-    className: cn(
-      cardClassName,
-      isInactive ? "opacity-80" : "hover:shadow-elevated",
-      hasLinkedIn && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medium-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-    ),
-  };
+  const className = cn(
+    cardClassName,
+    isInactive ? "opacity-80" : "hover:shadow-elevated",
+    hasLinkedIn &&
+      "cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medium-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+  );
 
   const content = (
     <>
@@ -86,17 +68,17 @@ export function CommunityMemberCard({
 
   if (hasLinkedIn) {
     return (
-      <motion.a
-        {...motionProps}
+      <a
+        className={className}
         href={member.linkedin}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${member.name} on LinkedIn`}
       >
         {content}
-      </motion.a>
+      </a>
     );
   }
 
-  return <motion.article {...motionProps}>{content}</motion.article>;
+  return <article className={className}>{content}</article>;
 }

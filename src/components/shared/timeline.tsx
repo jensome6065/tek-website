@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export interface TimelineItem {
@@ -16,26 +13,11 @@ interface TimelineProps {
 }
 
 export function Timeline({ items, variant = "vertical" }: TimelineProps) {
-  const prefersReducedMotion = useReducedMotion();
-
   if (variant === "process") {
     return (
       <ol className="relative space-y-0">
         {items.map((item, index) => (
-          <motion.li
-            key={item.title}
-            initial={
-              prefersReducedMotion ? false : { opacity: 0, x: -16 }
-            }
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{
-              duration: prefersReducedMotion ? 0 : 0.5,
-              delay: prefersReducedMotion ? 0 : index * 0.06,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="relative flex gap-6 pb-10 last:pb-0"
-          >
+          <li key={item.title} className="relative flex gap-6 pb-10 last:pb-0">
             <div className="flex flex-col items-center">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white shadow-soft">
                 {index + 1}
@@ -52,7 +34,7 @@ export function Timeline({ items, variant = "vertical" }: TimelineProps) {
                 {item.description}
               </p>
             </div>
-          </motion.li>
+          </li>
         ))}
       </ol>
     );
@@ -60,19 +42,8 @@ export function Timeline({ items, variant = "vertical" }: TimelineProps) {
 
   return (
     <ol className="relative ml-3 space-y-10 border-l border-border">
-      {items.map((item, index) => (
-        <motion.li
-          key={`${item.year}-${item.title}`}
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{
-            duration: prefersReducedMotion ? 0 : 0.5,
-            delay: prefersReducedMotion ? 0 : index * 0.06,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="relative pl-8"
-        >
+      {items.map((item) => (
+        <li key={`${item.year}-${item.title}`} className="relative pl-8">
           <span
             className={cn(
               "absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-medium-blue ring-4 ring-background"
@@ -88,7 +59,7 @@ export function Timeline({ items, variant = "vertical" }: TimelineProps) {
           <p className="mt-2 max-w-xl text-muted leading-relaxed">
             {item.description}
           </p>
-        </motion.li>
+        </li>
       ))}
     </ol>
   );

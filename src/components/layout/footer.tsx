@@ -18,6 +18,7 @@ export function Footer() {
                 width={44}
                 height={44}
                 className="h-11 w-11 rounded-full"
+                loading="lazy"
               />
               <div>
                 <p className="font-semibold tracking-tight text-dark-neutral">

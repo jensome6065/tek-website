@@ -1,19 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  StaggerItem,
-  StaggerReveal,
-} from "@/components/shared/animated-reveal";
 
 export function FinalCTA() {
   return (
     <section className="py-14 sm:py-20">
       <div className="container-page">
-        <StaggerReveal
-          className="relative overflow-hidden rounded-3xl bg-brand px-8 py-10 text-center shadow-elevated sm:px-12 sm:py-12"
-          delay={0.05}
-          stagger={0.1}
-        >
+        <div className="relative overflow-hidden rounded-3xl bg-brand px-8 py-10 text-center shadow-elevated sm:px-12 sm:py-12">
           <div
             className="pointer-events-none absolute inset-0 opacity-30"
             aria-hidden
@@ -23,17 +15,13 @@ export function FinalCTA() {
             }}
           />
 
-          <StaggerItem className="relative">
+          <div className="relative">
             <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
               Your journey starts here.
             </h2>
-          </StaggerItem>
-          <StaggerItem className="relative">
-            <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-light-blue/90 sm:text-lg">
+            <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-white/90 sm:text-lg">
               Build, grow, and find your people at TEK.
             </p>
-          </StaggerItem>
-          <StaggerItem className="relative">
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <Button
                 asChild
@@ -51,8 +39,8 @@ export function FinalCTA() {
                 <Link href="/contact">Contact Us</Link>
               </Button>
             </div>
-          </StaggerItem>
-        </StaggerReveal>
+          </div>
+        </div>
       </div>
     </section>
   );

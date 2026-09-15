@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Recruitment",
   description:
     "Join TEK at UMass Amherst. Learn about our recruitment process, important dates, and FAQ.",
+  alternates: { canonical: "/recruitment" },
 };
 
 export default function RecruitmentPage() {

@@ -1,16 +1,11 @@
 import { communityStats } from "@/lib/data/stats";
 import { AnimatedCounter } from "@/components/shared/animated-counter";
-import {
-  AnimatedReveal,
-  StaggerItem,
-  StaggerReveal,
-} from "@/components/shared/animated-reveal";
 
 export function StatsSection() {
   return (
     <section className="py-16 sm:py-20">
       <div className="container-page">
-        <AnimatedReveal className="mb-12 text-center">
+        <div className="mb-12 text-center">
           <p className="text-sm font-medium tracking-wide text-medium-blue uppercase">
             By the numbers
           </p>
@@ -21,23 +16,19 @@ export function StatsSection() {
             Metrics that reflect how we grow together - not just how many people
             join.
           </p>
-        </AnimatedReveal>
+        </div>
 
-        <StaggerReveal
-          className="flex flex-wrap justify-center gap-x-10 gap-y-10 sm:gap-x-14 lg:gap-x-16"
-          delay={0.12}
-          stagger={0.1}
-        >
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-10 sm:gap-x-14 lg:gap-x-16">
           {communityStats.map((stat) => (
-            <StaggerItem key={stat.id} className="w-36 sm:w-40">
+            <div key={stat.id} className="w-36 sm:w-40">
               <AnimatedCounter
                 value={stat.value}
                 suffix={stat.suffix}
                 label={stat.label}
               />
-            </StaggerItem>
+            </div>
           ))}
-        </StaggerReveal>
+        </div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 interface AnimatedCounterProps {
   value: number;
@@ -15,28 +15,51 @@ export function AnimatedCounter({
   label,
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
-  const prefersReducedMotion = useReducedMotion();
-  const motionValue = useMotionValue(0);
-  const spring = useSpring(motionValue, { duration: 1800, bounce: 0 });
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [display, setDisplay] = useState(0);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
-    if (!isInView) return;
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-40px", threshold: 0.2 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
     if (prefersReducedMotion) {
       setDisplay(value);
       return;
     }
-    motionValue.set(value);
-  }, [isInView, motionValue, value, prefersReducedMotion]);
 
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    const unsubscribe = spring.on("change", (latest) => {
-      setDisplay(Math.round(latest));
-    });
-    return unsubscribe;
-  }, [spring, prefersReducedMotion]);
+    let frame = 0;
+    const duration = 1200;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - start) / duration);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(Math.round(value * eased));
+      if (progress < 1) {
+        frame = requestAnimationFrame(tick);
+      }
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [started, value, prefersReducedMotion]);
 
   return (
     <div ref={ref} className="text-center">

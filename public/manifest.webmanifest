@@ -1,0 +1,17 @@
+{
+  "name": "TEK at UMass Amherst",
+  "short_name": "TEK",
+  "description": "The first professional and social technology community at UMass Amherst.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#fafaf8",
+  "theme_color": "#2b3c67",
+  "icons": [
+    {
+      "src": "/logos/tek-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

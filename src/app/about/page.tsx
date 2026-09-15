@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Learn about TEK's mission, values, history, and vision - building a technology community at UMass Amherst where students belong.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {

@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { recruitmentSignal } from "@/lib/data/recruitment";
 
 export function CommunitySignal() {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   if (!recruitmentSignal.active) return null;
 
@@ -43,14 +43,11 @@ export function CommunitySignal() {
             </div>
           </div>
 
-          <motion.span
-            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-medium-blue transition-colors group-hover:text-dark-blue"
-            whileHover={prefersReducedMotion ? undefined : { x: 2 }}
-          >
+          <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-medium-blue transition-transform group-hover:translate-x-0.5 group-hover:text-dark-blue motion-reduce:group-hover:translate-x-0">
             <span className="hidden sm:inline">{recruitmentSignal.cta}</span>
             <ArrowRight className="h-4 w-4" aria-hidden />
             <span className="sr-only">{recruitmentSignal.cta}</span>
-          </motion.span>
+          </span>
         </Link>
       </div>
     </section>

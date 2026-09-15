@@ -2,13 +2,9 @@
 
 import Image from "next/image";
 import { useEffect, useCallback, useState, useRef } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-} from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 import type { MomentPhoto } from "@/lib/data/moments";
 
@@ -23,7 +19,7 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
   const [inView, setInView] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const featured = photos[featuredIndex];
 
@@ -113,29 +109,16 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* Featured stage */}
         <div className="relative h-[20rem] w-full overflow-hidden rounded-2xl bg-black/5 ring-1 ring-black/5 sm:h-[24rem] lg:h-[28rem] dark:bg-white/5 dark:ring-white/10">
-          <AnimatePresence mode="sync" initial={false}>
-            <motion.div
-              key={featured.id}
-              initial={prefersReducedMotion ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={prefersReducedMotion ? undefined : { opacity: 0 }}
-              transition={{
-                duration: prefersReducedMotion ? 0 : 0.45,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={featured.src}
-                alt={featured.alt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 55vw"
-                className="object-cover dark:brightness-[1.06]"
-              />
-            </motion.div>
-          </AnimatePresence>
+          <div key={featured.id} className="absolute inset-0">
+            <Image
+              src={featured.src}
+              alt={featured.alt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 55vw"
+              className="object-cover dark:brightness-[1.06]"
+            />
+          </div>
 
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
@@ -183,7 +166,6 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
           </div>
         </div>
 
-        {/* Interactive thumbnail strip */}
         <ul className="grid grid-cols-4 gap-1.5 sm:grid-cols-8 sm:gap-1.5">
           {photos.map((photo, index) => {
             const isActive = index === featuredIndex;
@@ -225,100 +207,77 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
         </ul>
 
         <p className="mt-4 text-center text-sm text-muted lg:text-left">
-          Hover to preview · Click for full size
+          Hover or focus to preview · Click or tap for full size
         </p>
       </div>
 
-      <AnimatePresence>
-        {lightboxPhoto && lightboxIndex !== null && (
-          <motion.div
-            ref={lightboxRef}
-            key="lightbox"
-            initial={prefersReducedMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={prefersReducedMotion ? undefined : { opacity: 0 }}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 outline-none sm:p-8"
+      {lightboxPhoto && lightboxIndex !== null ? (
+        <div
+          ref={lightboxRef}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 outline-none sm:p-8"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${lightboxPhoto.label} photo`}
+          tabIndex={-1}
+        >
+          <button
+            type="button"
             onClick={closeLightbox}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${lightboxPhoto.label} photo`}
-            tabIndex={-1}
+            className="absolute top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+            aria-label="Close gallery"
           >
-            <button
-              type="button"
-              onClick={closeLightbox}
-              className="absolute top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
-              aria-label="Close gallery"
-            >
-              <X className="h-5 w-5" aria-hidden />
-            </button>
+            <X className="h-5 w-5" aria-hidden />
+          </button>
 
-            <button
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                showPrev();
-              }}
-              className="absolute left-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
-              aria-label="Previous photo"
-            >
-              <ChevronLeft className="h-6 w-6" aria-hidden />
-            </button>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              showPrev();
+            }}
+            className="absolute left-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
+            aria-label="Previous photo"
+          >
+            <ChevronLeft className="h-6 w-6" aria-hidden />
+          </button>
 
-            <button
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                showNext();
-              }}
-              className="absolute right-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
-              aria-label="Next photo"
-            >
-              <ChevronRight className="h-6 w-6" aria-hidden />
-            </button>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              showNext();
+            }}
+            className="absolute right-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
+            aria-label="Next photo"
+          >
+            <ChevronRight className="h-6 w-6" aria-hidden />
+          </button>
 
-            <motion.div
-              key={lightboxPhoto.id}
-              initial={
-                prefersReducedMotion ? false : { opacity: 0, scale: 0.98 }
-              }
-              animate={{ opacity: 1, scale: 1 }}
-              exit={
-                prefersReducedMotion
-                  ? undefined
-                  : { opacity: 0, scale: 0.98 }
-              }
-              transition={{
-                duration: prefersReducedMotion ? 0 : 0.25,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="relative flex max-h-[85vh] w-full max-w-5xl flex-col items-center"
+          <div className="relative flex max-h-[85vh] w-full max-w-5xl flex-col items-center">
+            <div
+              className="relative max-h-[80vh]"
+              onClick={(event) => event.stopPropagation()}
             >
-              <div
-                className="relative max-h-[80vh]"
-                onClick={(event) => event.stopPropagation()}
-              >
-                <Image
-                  src={lightboxPhoto.src}
-                  alt={lightboxPhoto.alt}
-                  width={lightboxPhoto.width}
-                  height={lightboxPhoto.height}
-                  className="max-h-[80vh] w-auto max-w-full rounded-2xl object-contain"
-                  style={{ width: "auto", height: "auto" }}
-                  sizes="90vw"
-                />
-              </div>
-              <p className="mt-4 text-sm font-medium tracking-wide text-white/90">
-                {lightboxPhoto.label}
-                <span className="ml-2 text-white/70">
-                  {lightboxIndex + 1} / {photos.length}
-                </span>
-              </p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <Image
+                src={lightboxPhoto.src}
+                alt={lightboxPhoto.alt}
+                width={lightboxPhoto.width}
+                height={lightboxPhoto.height}
+                className="max-h-[80vh] w-auto max-w-full rounded-2xl object-contain"
+                style={{ width: "auto", height: "auto" }}
+                sizes="90vw"
+              />
+            </div>
+            <p className="mt-4 text-sm font-medium tracking-wide text-white/90">
+              {lightboxPhoto.label}
+              <span className="ml-2 text-white/70">
+                {lightboxIndex + 1} / {photos.length}
+              </span>
+            </p>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

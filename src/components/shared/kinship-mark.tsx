@@ -1,15 +1,15 @@
 "use client";
 
-import { useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { DinoSprite } from "@/components/shared/dino-sprite";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 
 /**
  * Footer kinship mark — click the dino a few times for a tiny hop easter egg.
  */
 export function KinshipMark() {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [hops, setHops] = useState(0);
   const [hopKey, setHopKey] = useState(0);
   const [message, setMessage] = useState<string | null>(null);

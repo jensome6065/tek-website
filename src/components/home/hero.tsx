@@ -1,20 +1,13 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { recruitmentSignal } from "@/lib/data/recruitment";
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 const headline =
   "UMass' first professional and social tech community";
 
 export function Hero() {
-  const prefersReducedMotion = useReducedMotion();
-
   return (
     <section className="relative isolate flex min-h-[100svh] items-end overflow-hidden pb-16 pt-32 sm:items-center sm:pb-24 sm:pt-36 lg:pb-28 lg:pt-40">
       <div className="absolute inset-0 -z-10">
@@ -24,7 +17,7 @@ export function Hero() {
           fill
           priority
           fetchPriority="high"
-          quality={70}
+          quality={65}
           className="object-cover object-[42%_40%] sm:object-[45%_35%]"
           sizes="100vw"
         />
@@ -49,15 +42,8 @@ export function Hero() {
             TEK
           </p>
 
-          <motion.div
-            className="mt-4 h-0.5 origin-left bg-maroon"
-            initial={prefersReducedMotion ? false : { scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={
-              prefersReducedMotion
-                ? { duration: 0 }
-                : { duration: 0.8, delay: 0.12, ease }
-            }
+          <div
+            className="hero-underline mt-4 h-0.5 origin-left bg-maroon"
             style={{ width: "3.5rem" }}
             aria-hidden
           />
@@ -93,13 +79,7 @@ export function Hero() {
                 className="inline-flex min-h-11 flex-wrap items-center gap-x-2.5 py-2 text-sm text-white/90 transition-colors hover:text-white"
               >
                 <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
-                  <span
-                    className={
-                      prefersReducedMotion
-                        ? "absolute inset-0 rounded-full bg-maroon/50"
-                        : "absolute inset-0 animate-ping rounded-full bg-maroon/50"
-                    }
-                  />
+                  <span className="hero-pulse absolute inset-0 rounded-full bg-maroon/50" />
                   <span className="relative h-2 w-2 rounded-full bg-maroon" />
                 </span>
                 <span className="font-medium text-light-blue">

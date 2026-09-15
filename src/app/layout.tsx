@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     "mentorship",
   ],
   authors: [{ name: "TEK at UMass Amherst" }],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -56,9 +59,9 @@ export const metadata: Metadata = {
       "The first professional and social technology community at UMass Amherst. Technology is better when built together.",
     images: [
       {
-        url: "/logos/tek-logo.png",
-        width: 512,
-        height: 512,
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
         alt: "TEK at UMass Amherst",
       },
     ],
@@ -68,7 +71,7 @@ export const metadata: Metadata = {
     title: "TEK at UMass Amherst",
     description:
       "The first professional and social technology community at UMass Amherst.",
-    images: ["/logos/tek-logo.png"],
+    images: ["/og.jpg"],
   },
   robots: {
     index: true,
@@ -79,7 +82,28 @@ export const metadata: Metadata = {
     apple: "/logos/tek-logo.png",
     shortcut: "/logos/tek-logo.png",
   },
+  manifest: "/manifest.webmanifest",
+};
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "TEK at UMass Amherst",
+  alternateName: "Technology, Empowerment & Kinship",
+  url: siteUrl,
+  logo: `${siteUrl}/logos/tek-logo.png`,
+  description:
+    "The first professional and social technology community at UMass Amherst.",
+  email: "tek-rso@umass.edu",
+  sameAs: [
+    "https://instagram.com/umasstek",
+    "https://linkedin.com/company/umasstek",
+  ],
+  parentOrganization: {
+    "@type": "CollegeOrUniversity",
+    name: "University of Massachusetts Amherst",
+    url: "https://www.umass.edu",
+  },
 };
 
 export default function RootLayout({
@@ -90,6 +114,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
         <ThemeProvider>
           <SkipToContent />
           <Navbar />
