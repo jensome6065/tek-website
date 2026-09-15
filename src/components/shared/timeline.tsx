@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export interface TimelineItem {
@@ -16,18 +16,22 @@ interface TimelineProps {
 }
 
 export function Timeline({ items, variant = "vertical" }: TimelineProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   if (variant === "process") {
     return (
       <ol className="relative space-y-0">
         {items.map((item, index) => (
           <motion.li
             key={item.title}
-            initial={{ opacity: 0, x: -16 }}
+            initial={
+              prefersReducedMotion ? false : { opacity: 0, x: -16 }
+            }
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{
-              duration: 0.5,
-              delay: index * 0.06,
+              duration: prefersReducedMotion ? 0 : 0.5,
+              delay: prefersReducedMotion ? 0 : index * 0.06,
               ease: [0.22, 1, 0.36, 1],
             }}
             className="relative flex gap-6 pb-10 last:pb-0"
@@ -55,16 +59,16 @@ export function Timeline({ items, variant = "vertical" }: TimelineProps) {
   }
 
   return (
-    <ol className="relative border-l border-border ml-3 space-y-10">
+    <ol className="relative ml-3 space-y-10 border-l border-border">
       {items.map((item, index) => (
         <motion.li
           key={`${item.year}-${item.title}`}
-          initial={{ opacity: 0, y: 16 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{
-            duration: 0.5,
-            delay: index * 0.06,
+            duration: prefersReducedMotion ? 0 : 0.5,
+            delay: prefersReducedMotion ? 0 : index * 0.06,
             ease: [0.22, 1, 0.36, 1],
           }}
           className="relative pl-8"

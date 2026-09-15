@@ -38,8 +38,7 @@ export function KinshipMark() {
       <button
         type="button"
         onClick={onClick}
-        className="group inline-flex items-center gap-2 rounded-full text-sm text-muted transition-colors hover:text-dark-neutral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medium-blue"
-        aria-label="Kinship easter egg"
+        className="group inline-flex min-h-11 items-center gap-2 rounded-full text-sm text-muted transition-colors hover:text-dark-neutral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medium-blue"
       >
         <span
           key={hopKey}
@@ -54,7 +53,11 @@ export function KinshipMark() {
         <span>Technology. Empowerment. Kinship.</span>
       </button>
       {message && (
-        <p className="absolute -top-8 right-0 whitespace-nowrap text-xs font-medium text-maroon">
+        <p
+          className="absolute -top-8 right-0 whitespace-nowrap text-xs font-medium text-maroon"
+          role="status"
+          aria-live="polite"
+        >
           {message}
         </p>
       )}

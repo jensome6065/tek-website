@@ -34,40 +34,40 @@ export function Footer() {
                 href={socialLinks.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-card text-dark-blue shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-elevated"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-card text-dark-blue shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-elevated"
                 aria-label="Instagram"
               >
-                <InstagramIcon className="h-4 w-4" />
+                <InstagramIcon className="h-4 w-4" aria-hidden />
               </a>
               <a
                 href={socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-card text-dark-blue shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-elevated"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-card text-dark-blue shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-elevated"
                 aria-label="LinkedIn"
               >
-                <LinkedInIcon className="h-4 w-4" />
+                <LinkedInIcon className="h-4 w-4" aria-hidden />
               </a>
               <a
                 href={socialLinks.email}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-card text-dark-blue shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-elevated"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-card text-dark-blue shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-elevated"
                 aria-label="Email"
               >
-                <Mail className="h-4 w-4" />
+                <Mail className="h-4 w-4" aria-hidden />
               </a>
             </div>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold tracking-wide text-dark-neutral uppercase">
+            <p className="text-sm font-semibold tracking-wide text-dark-neutral uppercase">
               Community
-            </h3>
-            <ul className="mt-4 space-y-3">
+            </p>
+            <ul className="mt-4 space-y-1">
               {footerLinks.community.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted transition-colors hover:text-dark-blue"
+                    className="inline-flex min-h-11 items-center text-sm text-muted transition-colors hover:text-dark-blue"
                   >
                     {link.label}
                   </Link>
@@ -77,15 +77,15 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold tracking-wide text-dark-neutral uppercase">
+            <p className="text-sm font-semibold tracking-wide text-dark-neutral uppercase">
               Get Involved
-            </h3>
-            <ul className="mt-4 space-y-3">
+            </p>
+            <ul className="mt-4 space-y-1">
               {footerLinks.getInvolved.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted transition-colors hover:text-dark-blue"
+                    className="inline-flex min-h-11 items-center text-sm text-muted transition-colors hover:text-dark-blue"
                   >
                     {link.label}
                   </Link>
@@ -95,18 +95,18 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold tracking-wide text-dark-neutral uppercase">
+            <p className="text-sm font-semibold tracking-wide text-dark-neutral uppercase">
               Visit
-            </h3>
+            </p>
             <p className="mt-4 flex items-start gap-2 text-sm text-muted">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-medium-blue" />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-medium-blue" aria-hidden />
               University of Massachusetts Amherst
               <br />
               Amherst, MA 01003
             </p>
             <a
               href={socialLinks.email}
-              className="mt-4 inline-block text-sm font-medium text-maroon hover:underline"
+              className="mt-4 inline-flex min-h-11 items-center text-sm font-medium text-maroon hover:underline"
             >
               tek-rso@umass.edu
             </a>

@@ -395,7 +395,7 @@ export default function SponsorsPage() {
                   </h3>
                   <dl className="mt-6 space-y-4 text-white">
                     <div>
-                      <dt className="text-sm text-light-blue/80">Email</dt>
+                      <dt className="text-sm text-white/90">Email</dt>
                       <dd>
                         <a
                           href={`mailto:${sponsorContact.email}`}
@@ -406,7 +406,7 @@ export default function SponsorsPage() {
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-sm text-light-blue/80">
+                      <dt className="text-sm text-white/90">
                         President of Finance
                       </dt>
                       <dd className="font-medium">
@@ -414,7 +414,7 @@ export default function SponsorsPage() {
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-sm text-light-blue/80">
+                      <dt className="text-sm text-white/90">
                         Vice President of Finance
                       </dt>
                       <dd className="font-medium">
@@ -422,7 +422,7 @@ export default function SponsorsPage() {
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-sm text-light-blue/80">Instagram</dt>
+                      <dt className="text-sm text-white/90">Instagram</dt>
                       <dd>
                         <a
                           href={sponsorContact.instagramUrl}

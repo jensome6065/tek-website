@@ -6,9 +6,14 @@ import type { FeaturedCompany } from "@/lib/data/companies";
 
 interface CompanyLogoCardProps {
   company: FeaturedCompany;
+  /** Hide from assistive tech / tab order (marquee loop duplicates). */
+  decorative?: boolean;
 }
 
-export function CompanyLogoCard({ company }: CompanyLogoCardProps) {
+export function CompanyLogoCard({
+  company,
+  decorative = false,
+}: CompanyLogoCardProps) {
   const [failed, setFailed] = useState(false);
 
   const initials = company.name
@@ -19,12 +24,16 @@ export function CompanyLogoCard({ company }: CompanyLogoCardProps) {
     .toUpperCase();
 
   return (
-    <li className="group relative shrink-0 list-none">
+    <li
+      className="group relative shrink-0 list-none"
+      aria-hidden={decorative || undefined}
+    >
       <a
         href={company.href}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Visit ${company.name}`}
+        aria-label={decorative ? undefined : `Visit ${company.name}`}
+        tabIndex={decorative ? -1 : undefined}
         className="relative flex h-12 w-[7.25rem] items-center justify-center rounded-xl bg-white px-3 shadow-soft transition-shadow duration-300 group-hover:shadow-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medium-blue focus-visible:ring-offset-2 sm:h-14 sm:w-32"
       >
         <div className="flex items-center justify-center transition-opacity duration-200 group-hover:opacity-0">

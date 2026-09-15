@@ -128,6 +128,20 @@ export const events: TekEvent[] = [
     image: "/photos/events/theta-tau-cleanup.jpg",
   },
   {
+    id: "lake-swim-2026",
+    title: "TEK Lake Swim",
+    date: "April 16, 2026",
+    time: "5:00 PM - 8:00 PM",
+    location: "Puffers Pond",
+    description:
+      "An evening swim and hang at Puffers Pond with the TEK community.",
+    category: "social",
+    status: "past",
+    imageGradient: gradients[2],
+    image: "/photos/events/lake-swim.jpg",
+    imagePosition: "object-[center_58%]",
+  },
+  {
     id: "open-recruitment-3-2026",
     title: "TEK Casino Night",
     date: "March 30, 2026",
@@ -254,6 +268,20 @@ export const events: TekEvent[] = [
     status: "past",
     imageGradient: gradients[2],
     image: "/photos/events/professional-pictures.jpg",
+  },
+  {
+    id: "tek-x-umich-2025",
+    title: "TEK x UMich TEK",
+    date: "September 22, 2025",
+    time: "7:30 PM - 9:00 PM",
+    location: "Elm",
+    description:
+      "A cross-chapter hang with UMich TEK - meeting new faces and sharing community.",
+    category: "social",
+    status: "past",
+    imageGradient: gradients[4],
+    image: "/photos/events/tek-x-umich.jpg",
+    imagePosition: "object-[center_35%]",
   },
   {
     id: "eboard-hike-2025",

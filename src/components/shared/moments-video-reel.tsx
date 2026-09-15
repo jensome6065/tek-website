@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, Play, Pause } from "lucide-react";
 import { InstagramIcon } from "@/components/ui/icons";
 import { socialLinks } from "@/lib/data/navigation";
 import type { MomentVideo } from "@/lib/data/moment-videos";
@@ -21,6 +21,7 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
   const [isInView, setIsInView] = useState(false);
   const [muted, setMuted] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [userPlaying, setUserPlaying] = useState(false);
   /** Defer attaching any MP4 sources until the reel is near the viewport. */
   const [shouldLoad, setShouldLoad] = useState(false);
 
@@ -78,7 +79,13 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
       if (!video) return;
       video.muted = muted;
 
-      if (i === index && isInView && shouldLoad && !reducedMotion) {
+      const shouldPlay =
+        i === index &&
+        isInView &&
+        shouldLoad &&
+        (!reducedMotion || userPlaying);
+
+      if (shouldPlay) {
         video.play().catch(() => {
           // Autoplay can fail until muted / user gesture.
         });
@@ -86,7 +93,30 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
         video.pause();
       }
     });
-  }, [index, isInView, hasVideos, reducedMotion, muted, shouldLoad]);
+  }, [
+    index,
+    isInView,
+    hasVideos,
+    reducedMotion,
+    muted,
+    shouldLoad,
+    userPlaying,
+  ]);
+
+  const togglePlayback = () => {
+    const video = videoRefs.current[index];
+    if (!video) {
+      setUserPlaying((value) => !value);
+      return;
+    }
+    if (video.paused) {
+      setUserPlaying(true);
+      video.play().catch(() => {});
+    } else {
+      setUserPlaying(false);
+      video.pause();
+    }
+  };
 
   const scrollToIndex = (nextIndex: number) => {
     const scroller = scrollerRef.current;
@@ -114,9 +144,9 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
           href={socialLinks.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full bg-brand px-3.5 py-2 text-xs font-medium text-white transition-opacity hover:opacity-90"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
-          <InstagramIcon className="h-3.5 w-3.5" />
+          <InstagramIcon className="h-3.5 w-3.5" aria-hidden />
           Follow
         </Link>
       </div>
@@ -130,6 +160,7 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
           <>
             <div
               ref={scrollerRef}
+              role="region"
               className="aspect-[9/16] snap-y snap-mandatory overflow-y-auto overscroll-y-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               aria-label="Instagram video gallery"
             >
@@ -183,43 +214,65 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
             </div>
 
             <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 pt-16 pb-4">
-              <div className="pointer-events-auto flex items-end justify-between gap-3">
+                <div className="pointer-events-auto flex items-end justify-between gap-3">
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium text-white drop-shadow-sm">
                     {current?.label}
                   </p>
                   {videos.length > 1 && (
-                    <div className="mt-2.5 flex gap-1.5">
+                    <div className="mt-2.5 flex gap-1">
                       {videos.map((video, i) => (
                         <button
                           key={video.id}
                           type="button"
                           onClick={() => scrollToIndex(i)}
-                          className={cn(
-                            "h-1 rounded-full transition-all",
-                            i === index
-                              ? "w-5 bg-white"
-                              : "w-1.5 bg-white/40 hover:bg-white/70"
-                          )}
+                          className="inline-flex h-11 min-w-11 items-center justify-center"
                           aria-label={`Go to ${video.label}`}
-                        />
+                          aria-current={i === index ? "true" : undefined}
+                        >
+                          <span
+                            className={cn(
+                              "h-1 rounded-full transition-all",
+                              i === index
+                                ? "w-5 bg-white"
+                                : "w-1.5 bg-white/40"
+                            )}
+                            aria-hidden
+                          />
+                        </button>
                       ))}
                     </div>
                   )}
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setMuted((value) => !value)}
-                  className="rounded-full bg-white/15 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
-                  aria-label={muted ? "Unmute video" : "Mute video"}
-                >
-                  {muted ? (
-                    <VolumeX className="h-4 w-4" />
-                  ) : (
-                    <Volume2 className="h-4 w-4" />
-                  )}
-                </button>
+                <div className="flex shrink-0 gap-2">
+                  {reducedMotion ? (
+                    <button
+                      type="button"
+                      onClick={togglePlayback}
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+                      aria-label={userPlaying ? "Pause video" : "Play video"}
+                    >
+                      {userPlaying ? (
+                        <Pause className="h-4 w-4" aria-hidden />
+                      ) : (
+                        <Play className="h-4 w-4" aria-hidden />
+                      )}
+                    </button>
+                  ) : null}
+                  <button
+                    type="button"
+                    onClick={() => setMuted((value) => !value)}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+                    aria-label={muted ? "Unmute video" : "Mute video"}
+                  >
+                    {muted ? (
+                      <VolumeX className="h-4 w-4" aria-hidden />
+                    ) : (
+                      <Volume2 className="h-4 w-4" aria-hidden />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </>
@@ -247,7 +300,7 @@ export function MomentsVideoReel({ videos, className }: MomentsVideoReelProps) {
         href={current?.href ?? socialLinks.instagram}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 text-center text-sm font-semibold text-medium-blue underline-offset-4 transition-colors hover:text-foreground hover:underline"
+        className="mt-4 inline-flex min-h-11 items-center justify-center text-center text-sm font-semibold text-medium-blue underline-offset-4 transition-colors hover:text-foreground hover:underline"
       >
         View on Instagram →
       </Link>

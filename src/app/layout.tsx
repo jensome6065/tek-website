@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { BackToTopButton } from "@/components/layout/back-to-top";
-import { DinoCursor } from "@/components/layout/dino-cursor";
-import { DinoEasterEgg } from "@/components/shared/dino-easter-egg";
+import { ClientExtras } from "@/components/layout/client-extras";
 import { SkipToContent } from "@/components/layout/skip-to-content";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
@@ -19,6 +18,15 @@ const inter = Inter({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://umasstek.com";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafaf8" },
+    { media: "(prefers-color-scheme: dark)", color: "#12111a" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -90,8 +98,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <BackToTopButton />
-          <DinoCursor />
-          <DinoEasterEgg />
+          <ClientExtras />
         </ThemeProvider>
         <Analytics />
       </body>

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Calendar, Clock, MapPin } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { TekEvent } from "@/lib/data/events";
 import { cn } from "@/lib/utils";
 
@@ -18,17 +18,19 @@ const categoryLabels = {
 };
 
 export function EventCard({ event, index = 0 }: EventCardProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{
-        duration: 0.5,
-        delay: index * 0.08,
+        duration: prefersReducedMotion ? 0 : 0.5,
+        delay: prefersReducedMotion ? 0 : index * 0.08,
         ease: [0.22, 1, 0.36, 1],
       }}
-      whileHover={{ y: -4 }}
+      whileHover={prefersReducedMotion ? undefined : { y: -4 }}
       className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-soft transition-shadow duration-300 hover:shadow-elevated"
     >
       <div

@@ -5,7 +5,8 @@
   --background-warm: #f8f8f6;
   --foreground: #211f33;
   --light-blue: #99b6df;
-  --medium-blue: #5d72ad;
+  /* Darkened from #5d72ad for WCAG AA contrast on --background (#fafaf8) */
+  --medium-blue: #4a5f94;
   --dark-blue: #2b3c67;
   --brand: #2b3c67;
   --dark-neutral: #211f33;
@@ -29,7 +30,7 @@
   --dark-blue: #8fa4d4;
   --brand: #2b3c67;
   --dark-neutral: #f4f3ef;
-  --maroon: #c45a5a;
+  --maroon: #e07878;
   --muted: #a39fb8;
   --border: #2e2b3d;
   --card: #1c1a28;
@@ -72,6 +73,16 @@ html {
   scroll-behavior: smooth;
   /* Avoid CLS when the vertical scrollbar appears after content paints */
   scrollbar-gutter: stable;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    transition: none;
+  }
 }
 
 body {

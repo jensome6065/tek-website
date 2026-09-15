@@ -26,7 +26,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className={cn(
-        "inline-flex h-10 w-10 items-center justify-center rounded-full text-dark-neutral transition-colors hover:bg-dark-neutral/5",
+        "inline-flex h-11 w-11 items-center justify-center rounded-full text-dark-neutral transition-colors hover:bg-dark-neutral/5",
         className
       )}
       aria-label={
@@ -36,6 +36,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
             : "Switch to dark mode"
           : "Toggle theme"
       }
+      aria-pressed={mounted ? isDark : undefined}
     >
       {mounted ? (
         isDark ? (

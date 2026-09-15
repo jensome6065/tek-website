@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { CommunityMember } from "@/lib/data/members";
 import { MemberAvatar } from "@/components/members/member-avatar";
 import { cn } from "@/lib/utils";
@@ -22,19 +22,23 @@ export function CommunityMemberCard({
   member,
   index = 0,
 }: CommunityMemberCardProps) {
+  const prefersReducedMotion = useReducedMotion();
   const isInactive = member.status === "inactive";
   const hasLinkedIn = Boolean(member.linkedin);
 
   const motionProps = {
-    initial: { opacity: 0, y: 16 },
+    initial: prefersReducedMotion ? false : { opacity: 0, y: 16 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-40px" },
     transition: {
-      duration: 0.45,
-      delay: index * 0.04,
+      duration: prefersReducedMotion ? 0 : 0.45,
+      delay: prefersReducedMotion ? 0 : index * 0.04,
       ease: [0.22, 1, 0.36, 1] as const,
     },
-    whileHover: hasLinkedIn && !isInactive ? { y: -3 } : undefined,
+    whileHover:
+      !prefersReducedMotion && hasLinkedIn && !isInactive
+        ? { y: -3 }
+        : undefined,
     className: cn(
       cardClassName,
       isInactive ? "opacity-80" : "hover:shadow-elevated",

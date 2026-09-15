@@ -2,8 +2,13 @@
 
 import Image from "next/image";
 import { useEffect, useCallback, useState, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useFocusTrap } from "@/hooks/use-focus-trap";
 import { cn } from "@/lib/utils";
 import type { MomentPhoto } from "@/lib/data/moments";
 
@@ -17,6 +22,8 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const featured = photos[featuredIndex];
 
@@ -44,14 +51,22 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
     return () => observer.disconnect();
   }, []);
 
-  // Gentle auto-advance while idle and on-screen
+  // Gentle auto-advance while idle and on-screen (skip when reduced motion)
   useEffect(() => {
-    if (!inView || paused || lightboxIndex !== null || photos.length < 2) return;
+    if (
+      prefersReducedMotion ||
+      !inView ||
+      paused ||
+      lightboxIndex !== null ||
+      photos.length < 2
+    ) {
+      return;
+    }
     const id = window.setInterval(() => {
       setFeaturedIndex((current) => (current + 1) % photos.length);
     }, 4500);
     return () => window.clearInterval(id);
-  }, [inView, paused, lightboxIndex, photos.length]);
+  }, [inView, paused, lightboxIndex, photos.length, prefersReducedMotion]);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
 
@@ -71,7 +86,6 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
     if (lightboxIndex === null) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeLightbox();
       if (event.key === "ArrowLeft") showPrev();
       if (event.key === "ArrowRight") showNext();
     };
@@ -84,7 +98,9 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [lightboxIndex, closeLightbox, showPrev, showNext]);
+  }, [lightboxIndex, showPrev, showNext]);
+
+  useFocusTrap(lightboxIndex !== null, lightboxRef, closeLightbox);
 
   const lightboxPhoto =
     lightboxIndex === null ? null : photos[lightboxIndex];
@@ -102,10 +118,13 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
           <AnimatePresence mode="sync" initial={false}>
             <motion.div
               key={featured.id}
-              initial={{ opacity: 0 }}
+              initial={prefersReducedMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              exit={prefersReducedMotion ? undefined : { opacity: 0 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.45,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="absolute inset-0"
             >
               <Image
@@ -129,7 +148,7 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-3 p-4 sm:p-5">
             <div className="min-w-0">
-              <p className="text-xs font-medium tracking-wide text-white/70 uppercase">
+              <p className="text-xs font-medium tracking-wide text-white/85 uppercase">
                 {featuredIndex + 1} / {photos.length}
               </p>
               <p className="mt-1 truncate text-base font-semibold text-white sm:text-lg">
@@ -144,10 +163,10 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
                   event.stopPropagation();
                   stepFeatured(-1);
                 }}
-                className="rounded-full bg-white/15 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
                 aria-label="Previous photo"
               >
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronLeft className="h-5 w-5" aria-hidden />
               </button>
               <button
                 type="button"
@@ -155,17 +174,17 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
                   event.stopPropagation();
                   stepFeatured(1);
                 }}
-                className="rounded-full bg-white/15 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-sm transition-colors hover:bg-white/25"
                 aria-label="Next photo"
               >
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-5 w-5" aria-hidden />
               </button>
             </div>
           </div>
         </div>
 
         {/* Interactive thumbnail strip */}
-        <ul className="grid grid-cols-8 gap-1 sm:gap-1.5">
+        <ul className="grid grid-cols-4 gap-1.5 sm:grid-cols-8 sm:gap-1.5">
           {photos.map((photo, index) => {
             const isActive = index === featuredIndex;
             return (
@@ -179,7 +198,7 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
                     setLightboxIndex(index);
                   }}
                   className={cn(
-                    "relative aspect-square w-full overflow-hidden rounded-md ring-1 transition-all duration-300 ease-out",
+                    "relative aspect-square min-h-11 w-full overflow-hidden rounded-md ring-1 transition-all duration-300 ease-out",
                     isActive
                       ? "ring-2 ring-medium-blue ring-offset-1 ring-offset-background dark:ring-light-blue"
                       : "ring-black/5 opacity-75 hover:opacity-100 dark:ring-white/10"
@@ -191,10 +210,12 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
                     src={photo.src}
                     alt=""
                     fill
-                    sizes="64px"
+                    sizes="80px"
                     className={cn(
                       "object-cover transition-transform duration-500 ease-out dark:brightness-[1.06]",
-                      isActive ? "scale-105" : "scale-100"
+                      isActive && !prefersReducedMotion
+                        ? "scale-105"
+                        : "scale-100"
                     )}
                   />
                 </button>
@@ -211,24 +232,26 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
       <AnimatePresence>
         {lightboxPhoto && lightboxIndex !== null && (
           <motion.div
+            ref={lightboxRef}
             key="lightbox"
-            initial={{ opacity: 0 }}
+            initial={prefersReducedMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
+            exit={prefersReducedMotion ? undefined : { opacity: 0 }}
+            transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 outline-none sm:p-8"
             onClick={closeLightbox}
             role="dialog"
             aria-modal="true"
             aria-label={`${lightboxPhoto.label} photo`}
+            tabIndex={-1}
           >
             <button
               type="button"
               onClick={closeLightbox}
-              className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+              className="absolute top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
               aria-label="Close gallery"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden />
             </button>
 
             <button
@@ -237,10 +260,10 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
                 event.stopPropagation();
                 showPrev();
               }}
-              className="absolute left-3 z-10 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20 sm:left-6"
+              className="absolute left-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
               aria-label="Previous photo"
             >
-              <ChevronLeft className="h-6 w-6" />
+              <ChevronLeft className="h-6 w-6" aria-hidden />
             </button>
 
             <button
@@ -249,18 +272,27 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
                 event.stopPropagation();
                 showNext();
               }}
-              className="absolute right-3 z-10 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20 sm:right-6"
+              className="absolute right-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
               aria-label="Next photo"
             >
-              <ChevronRight className="h-6 w-6" />
+              <ChevronRight className="h-6 w-6" aria-hidden />
             </button>
 
             <motion.div
               key={lightboxPhoto.id}
-              initial={{ opacity: 0, scale: 0.98 }}
+              initial={
+                prefersReducedMotion ? false : { opacity: 0, scale: 0.98 }
+              }
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              exit={
+                prefersReducedMotion
+                  ? undefined
+                  : { opacity: 0, scale: 0.98 }
+              }
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.25,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="relative flex max-h-[85vh] w-full max-w-5xl flex-col items-center"
             >
               <div
@@ -279,7 +311,7 @@ export function MomentsGallery({ photos }: MomentsGalleryProps) {
               </div>
               <p className="mt-4 text-sm font-medium tracking-wide text-white/90">
                 {lightboxPhoto.label}
-                <span className="ml-2 text-white/50">
+                <span className="ml-2 text-white/70">
                   {lightboxIndex + 1} / {photos.length}
                 </span>
               </p>

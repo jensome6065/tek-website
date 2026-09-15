@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useMotionValue, useSpring } from "framer-motion";
+import { useInView, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 
 interface AnimatedCounterProps {
   value: number;
@@ -16,22 +16,27 @@ export function AnimatedCounter({
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const prefersReducedMotion = useReducedMotion();
   const motionValue = useMotionValue(0);
   const spring = useSpring(motionValue, { duration: 1800, bounce: 0 });
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    if (isInView) {
-      motionValue.set(value);
+    if (!isInView) return;
+    if (prefersReducedMotion) {
+      setDisplay(value);
+      return;
     }
-  }, [isInView, motionValue, value]);
+    motionValue.set(value);
+  }, [isInView, motionValue, value, prefersReducedMotion]);
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
     const unsubscribe = spring.on("change", (latest) => {
       setDisplay(Math.round(latest));
     });
     return unsubscribe;
-  }, [spring]);
+  }, [spring, prefersReducedMotion]);
 
   return (
     <div ref={ref} className="text-center">

@@ -13,8 +13,6 @@ function LogoMarqueeRow({
   direction?: "left" | "right";
   duration?: number;
 }) {
-  const loop = [...companies, ...companies];
-
   return (
     <div className="logo-marquee group/row relative overflow-hidden">
       <ul
@@ -23,10 +21,14 @@ function LogoMarqueeRow({
           animation: `logo-marquee-${direction} ${duration}s linear infinite`,
         }}
       >
-        {loop.map((company, index) => (
+        {companies.map((company) => (
+          <CompanyLogoCard key={company.id} company={company} />
+        ))}
+        {companies.map((company) => (
           <CompanyLogoCard
-            key={`${company.id}-${index}`}
+            key={`dup-${company.id}`}
             company={company}
+            decorative
           />
         ))}
       </ul>

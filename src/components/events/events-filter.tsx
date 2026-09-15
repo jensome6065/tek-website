@@ -43,11 +43,12 @@ export function EventsFilter({ events, title }: EventsFilterProps) {
               type="button"
               onClick={() => setActive(filter.value)}
               className={cn(
-                "rounded-full px-4 py-2 text-sm font-medium transition-all",
+                "min-h-11 rounded-full px-4 py-2.5 text-sm font-medium transition-all",
                 active === filter.value
                   ? "bg-brand text-white shadow-soft"
                   : "bg-card text-muted shadow-soft hover:text-dark-neutral"
               )}
+              aria-pressed={active === filter.value}
             >
               {filter.label}
             </button>

@@ -13,16 +13,16 @@ const buttonVariants = cva(
         secondary:
           "bg-card text-dark-neutral border border-border shadow-soft hover:border-light-blue hover:shadow-elevated hover:-translate-y-0.5",
         accent:
-          "bg-maroon text-white shadow-soft hover:bg-maroon/90 hover:shadow-elevated hover:-translate-y-0.5",
+          "bg-maroon text-white shadow-soft hover:bg-maroon/90 hover:shadow-elevated hover:-translate-y-0.5 dark:bg-[#a83535] dark:hover:bg-[#962f2f]",
         ghost:
           "text-dark-neutral hover:bg-dark-neutral/5 hover:text-dark-blue",
         link: "text-maroon underline-offset-4 hover:underline rounded-none px-0",
       },
       size: {
         default: "h-11 px-6",
-        sm: "h-9 px-4 text-xs",
+        sm: "h-10 px-4 text-xs",
         lg: "h-12 px-8 text-base",
-        icon: "h-10 w-10",
+        icon: "h-11 w-11",
       },
     },
     defaultVariants: {

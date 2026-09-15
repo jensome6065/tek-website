@@ -28,7 +28,11 @@ export function ContactForm() {
 
   if (state.success) {
     return (
-      <div className="flex h-full flex-col items-center justify-center rounded-3xl bg-card p-10 text-center shadow-soft">
+      <div
+        className="flex h-full flex-col items-center justify-center rounded-3xl bg-card p-10 text-center shadow-soft"
+        role="status"
+        aria-live="polite"
+      >
         <div className="dino-hop">
           <DinoSprite size={48} tone="brand" />
         </div>
@@ -47,6 +51,7 @@ export function ContactForm() {
       action={formAction}
       className="rounded-3xl bg-card p-8 shadow-soft sm:p-10"
       noValidate
+      aria-busy={pending}
     >
       <div className="space-y-5">
         <div className="space-y-2">
@@ -57,9 +62,14 @@ export function ContactForm() {
             placeholder="Your name"
             required
             aria-invalid={!!state.errors?.name}
+            aria-describedby={
+              state.errors?.name ? "name-error" : undefined
+            }
           />
           {state.errors?.name && (
-            <p className="text-sm text-maroon">{state.errors.name[0]}</p>
+            <p id="name-error" className="text-sm text-maroon" role="alert">
+              {state.errors.name[0]}
+            </p>
           )}
         </div>
 
@@ -72,9 +82,14 @@ export function ContactForm() {
             placeholder="you@umass.edu"
             required
             aria-invalid={!!state.errors?.email}
+            aria-describedby={
+              state.errors?.email ? "email-error" : undefined
+            }
           />
           {state.errors?.email && (
-            <p className="text-sm text-maroon">{state.errors.email[0]}</p>
+            <p id="email-error" className="text-sm text-maroon" role="alert">
+              {state.errors.email[0]}
+            </p>
           )}
         </div>
 
@@ -88,6 +103,9 @@ export function ContactForm() {
               defaultValue=""
               className="flex h-11 w-full rounded-xl border border-border bg-card px-4 text-sm text-dark-neutral shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medium-blue"
               aria-invalid={!!state.errors?.role}
+              aria-describedby={
+                state.errors?.role ? "role-error" : undefined
+              }
             >
               <option value="" disabled>
                 Select one
@@ -99,7 +117,9 @@ export function ContactForm() {
               ))}
             </select>
             {state.errors?.role && (
-              <p className="text-sm text-maroon">{state.errors.role[0]}</p>
+              <p id="role-error" className="text-sm text-maroon" role="alert">
+                {state.errors.role[0]}
+              </p>
             )}
           </div>
 
@@ -112,6 +132,9 @@ export function ContactForm() {
               defaultValue=""
               className="flex h-11 w-full rounded-xl border border-border bg-card px-4 text-sm text-dark-neutral shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medium-blue"
               aria-invalid={!!state.errors?.topic}
+              aria-describedby={
+                state.errors?.topic ? "topic-error" : undefined
+              }
             >
               <option value="" disabled>
                 Select a topic
@@ -123,7 +146,9 @@ export function ContactForm() {
               ))}
             </select>
             {state.errors?.topic && (
-              <p className="text-sm text-maroon">{state.errors.topic[0]}</p>
+              <p id="topic-error" className="text-sm text-maroon" role="alert">
+                {state.errors.topic[0]}
+              </p>
             )}
           </div>
         </div>
@@ -136,9 +161,18 @@ export function ContactForm() {
             placeholder="How can we help?"
             required
             aria-invalid={!!state.errors?.message}
+            aria-describedby={
+              state.errors?.message ? "message-error" : undefined
+            }
           />
           {state.errors?.message && (
-            <p className="text-sm text-maroon">{state.errors.message[0]}</p>
+            <p
+              id="message-error"
+              className="text-sm text-maroon"
+              role="alert"
+            >
+              {state.errors.message[0]}
+            </p>
           )}
         </div>
 
