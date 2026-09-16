@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
-import { recruitmentSignal } from "@/lib/data/recruitment";
+import { expoSignal } from "@/lib/data/recruitment";
 
 export function CommunitySignal() {
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  if (!recruitmentSignal.active) return null;
+  if (!expoSignal.active) return null;
 
   return (
     <section
@@ -17,7 +17,7 @@ export function CommunitySignal() {
     >
       <div className="container-page">
         <Link
-          href={recruitmentSignal.href}
+          href={expoSignal.href}
           className="group flex items-center justify-between gap-4 py-3.5 sm:py-4"
         >
           <div className="flex min-w-0 items-center gap-3 sm:gap-4">
@@ -33,20 +33,20 @@ export function CommunitySignal() {
             </span>
 
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-dark-neutral sm:text-base">
-                <span className="text-maroon">{recruitmentSignal.label}</span>
+              <p className="text-sm font-medium text-dark-neutral sm:text-base">
+                <span className="text-maroon">{expoSignal.label}</span>
                 <span className="mx-2 text-border" aria-hidden>
                   ·
                 </span>
-                <span className="text-muted">{recruitmentSignal.detail}</span>
+                <span className="text-muted">{expoSignal.detail}</span>
               </p>
             </div>
           </div>
 
           <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-medium-blue transition-transform group-hover:translate-x-0.5 group-hover:text-dark-blue motion-reduce:group-hover:translate-x-0">
-            <span className="hidden sm:inline">{recruitmentSignal.cta}</span>
+            <span className="hidden sm:inline">{expoSignal.cta}</span>
             <ArrowRight className="h-4 w-4" aria-hidden />
-            <span className="sr-only">{recruitmentSignal.cta}</span>
+            <span className="sr-only">{expoSignal.cta}</span>
           </span>
         </Link>
       </div>

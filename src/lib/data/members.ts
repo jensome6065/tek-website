@@ -140,7 +140,7 @@ const roster: MemberRecord[] = [
   },
   {
     name: "Grace Zhou",
-    major: "Computer Science",
+    major: "Computer Science + Biology",
     graduationYear: "2028",
     cohort: "founding",
     photo: "/photos/members/founding/grace.jpeg",

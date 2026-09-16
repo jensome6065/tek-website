@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import {
+  clubExpos,
+  expoSignal,
   importantDates,
   recruitmentFaqs,
   recruitmentSteps,
@@ -29,7 +31,43 @@ export default function RecruitmentPage() {
         description="Beta class recruitment releases soon. We look for curiosity, kindness, and a desire to build with others - not a perfect resume."
       />
 
-      <section className="pb-16 sm:pb-20">
+      {expoSignal.active ? (
+        <section
+          id="meet-us"
+          className="scroll-mt-28 bg-background-warm py-16 sm:py-20"
+        >
+          <div className="container-page">
+            <SectionHeader
+              eyebrow="This week"
+              title="Come find us"
+              description="Stop by our table at the club expos. We'll answer questions and tell you what TEK is about."
+            />
+            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+              {clubExpos.map((expo, index) => (
+                <AnimatedReveal
+                  key={expo.title}
+                  delay={index * 0.05}
+                  className="rounded-2xl bg-card p-6 shadow-soft"
+                >
+                  <p className="text-sm font-medium text-maroon">{expo.date}</p>
+                  <h3 className="mt-2 text-lg font-semibold tracking-tight text-dark-neutral">
+                    {expo.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted">
+                    {expo.time}
+                    <span className="mx-2 text-border" aria-hidden>
+                      ·
+                    </span>
+                    {expo.location}
+                  </p>
+                </AnimatedReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="py-16 sm:py-20">
         <div className="container-page">
           <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeader

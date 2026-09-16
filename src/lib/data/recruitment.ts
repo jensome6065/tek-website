@@ -1,4 +1,4 @@
-/** Homepage live signal - set `active: false` to hide the strip. */
+/** Hero live line - set `active: false` to hide it. */
 export const recruitmentSignal = {
   active: true,
   label: "Fall '26 Recruitment",
@@ -6,6 +6,30 @@ export const recruitmentSignal = {
   href: "/recruitment",
   cta: "Learn more",
 } as const;
+
+/** Homepage strip for campus expos. Set `active: false` after they pass. */
+export const expoSignal = {
+  active: true,
+  label: "Find us at the club expos",
+  detail: "Sept 18 & Sept 21",
+  href: "/recruitment#meet-us",
+  cta: "Details",
+} as const;
+
+export const clubExpos = [
+  {
+    title: "CICS Fall Community Expo",
+    date: "Friday, September 18, 2026",
+    time: "12–2 PM",
+    location: "LGRC A112 + Atrium",
+  },
+  {
+    title: "UMass Fall 2026 Activities Expo",
+    date: "Monday, September 21, 2026",
+    time: "11–3:30 PM",
+    location: "Student Union",
+  },
+] as const;
 
 export const recruitmentSteps = [
   {
