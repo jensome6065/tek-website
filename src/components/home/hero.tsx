@@ -83,12 +83,12 @@ export function Hero() {
                   <span className="relative h-2 w-2 rounded-full bg-maroon" />
                 </span>
                 <span className="font-medium text-light-blue">
-                  Fall &apos;26 recruitment
+                  {recruitmentSignal.label}
                 </span>
                 <span className="text-white/50" aria-hidden>
                   ·
                 </span>
-                <span>Beta class soon</span>
+                <span>{recruitmentSignal.detail}</span>
               </Link>
             </div>
           ) : null}

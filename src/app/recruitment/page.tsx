@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import {
-  clubExpos,
-  expoSignal,
   importantDates,
+  infoNight,
   recruitmentFaqs,
   recruitmentSteps,
 } from "@/lib/data/recruitment";
@@ -31,41 +30,31 @@ export default function RecruitmentPage() {
         description="Beta class recruitment releases soon. We look for curiosity, kindness, and a desire to build with others - not a perfect resume."
       />
 
-      {expoSignal.active ? (
-        <section
-          id="meet-us"
-          className="scroll-mt-28 bg-background-warm py-16 sm:py-20"
-        >
-          <div className="container-page">
-            <SectionHeader
-              eyebrow="This week"
-              title="Come find us"
-              description="Stop by our table at the club expos. We'll answer questions and tell you what TEK is about."
-            />
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {clubExpos.map((expo, index) => (
-                <AnimatedReveal
-                  key={expo.title}
-                  delay={index * 0.05}
-                  className="rounded-2xl bg-card p-6 shadow-soft"
-                >
-                  <p className="text-sm font-medium text-maroon">{expo.date}</p>
-                  <h3 className="mt-2 text-lg font-semibold tracking-tight text-dark-neutral">
-                    {expo.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted">
-                    {expo.time}
-                    <span className="mx-2 text-border" aria-hidden>
-                      ·
-                    </span>
-                    {expo.location}
-                  </p>
-                </AnimatedReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      ) : null}
+      <section
+        id="info-night"
+        className="scroll-mt-28 bg-background-warm py-16 sm:py-20"
+      >
+        <div className="container-page">
+          <SectionHeader
+            eyebrow="Next up"
+            title={infoNight.title}
+            description={infoNight.description}
+          />
+          <AnimatedReveal className="mt-10 max-w-xl rounded-2xl bg-card p-6 shadow-soft sm:p-8">
+            <p className="text-sm font-medium text-maroon">{infoNight.date}</p>
+            <p className="mt-3 text-base text-dark-neutral">
+              {infoNight.time}
+              <span className="mx-2 text-border" aria-hidden>
+                ·
+              </span>
+              {infoNight.location}
+            </p>
+            <Button asChild size="lg" className="mt-6">
+              <Link href="/contact">Express interest</Link>
+            </Button>
+          </AnimatedReveal>
+        </div>
+      </section>
 
       <section className="py-16 sm:py-20">
         <div className="container-page">
@@ -90,7 +79,7 @@ export default function RecruitmentPage() {
           <SectionHeader
             eyebrow="Mark your calendar"
             title="Important dates"
-            description="Dates will be announced soon. Follow us for the latest on applications and events."
+            description="Info night is locked in. Remaining recruitment dates will be announced soon."
           />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {importantDates.map((item, index) => (

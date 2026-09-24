@@ -1,35 +1,20 @@
 /** Hero live line - set `active: false` to hide it. */
 export const recruitmentSignal = {
   active: true,
-  label: "Fall '26 Recruitment",
-  detail: "Beta class recruitment soon",
-  href: "/recruitment",
+  label: "Info night",
+  detail: "Wed Oct 7, 6-7 PM · ILC",
+  href: "/recruitment#info-night",
   cta: "Learn more",
 } as const;
 
-/** Homepage strip for campus expos. Set `active: false` after they pass. */
-export const expoSignal = {
-  active: true,
-  label: "Find us at the club expos",
-  detail: "Sept 18 & Sept 21",
-  href: "/recruitment#meet-us",
-  cta: "Details",
+export const infoNight = {
+  title: "Info Night",
+  date: "Wednesday, October 7, 2026",
+  time: "6-7 PM",
+  location: "ILC (room TBA)",
+  description:
+    "Meet members, learn about Fall '26 recruitment, and ask anything about TEK. Room details coming soon.",
 } as const;
-
-export const clubExpos = [
-  {
-    title: "CICS Fall Community Expo",
-    date: "Friday, September 18, 2026",
-    time: "12–2 PM",
-    location: "LGRC A112 + Atrium",
-  },
-  {
-    title: "UMass Fall 2026 Activities Expo",
-    date: "Monday, September 21, 2026",
-    time: "11–3:30 PM",
-    location: "Student Union",
-  },
-] as const;
 
 export const recruitmentSteps = [
   {
@@ -60,6 +45,7 @@ export const recruitmentSteps = [
 ];
 
 export const importantDates = [
+  { label: "Info Night", date: "Oct 7 · 6-7 PM · ILC (room TBA)" },
   { label: "Applications Due", date: "TBA" },
   { label: "Open Events", date: "TBA" },
   { label: "Closed Events", date: "TBA" },
