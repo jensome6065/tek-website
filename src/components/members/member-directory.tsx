@@ -31,7 +31,7 @@ function MemberGroup({
         </h3>
         <p className="mt-2 text-base leading-relaxed text-muted">{description}</p>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {members.map((member, index) => (
           <CommunityMemberCard key={member.id} member={member} index={index} />
         ))}

@@ -35,14 +35,13 @@ export function CommunityMemberCard({ member }: CommunityMemberCardProps) {
         photo={member.photo}
         initials={member.initials}
         accent={member.accent}
-        className="h-32"
-        initialsClassName="text-2xl"
-        imageClassName="object-[center_20%]"
+        fit="natural"
+        initialsClassName="text-xl"
         muted={isInactive}
       />
-      <div className="p-5">
+      <div className="p-4">
         <div className="flex flex-wrap items-center gap-2">
-          <h3 className="font-semibold tracking-tight text-dark-neutral">
+          <h3 className="text-sm font-semibold tracking-tight text-dark-neutral">
             {member.name}
           </h3>
           <span
