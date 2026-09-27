@@ -13,14 +13,14 @@ export const infoNight = {
   time: "6-7 PM",
   location: "ILC (room TBA)",
   description:
-    "Meet members, learn about Fall '26 recruitment, and ask anything about TEK. Room details coming soon.",
+    "Meet members, learn about Fall '26 recruitment, and ask anything about TEK. Applications open right after Info Night.",
 } as const;
 
 export const recruitmentSteps = [
   {
     title: "Application",
     description:
-      "Share your story, interests, and why you want to join TEK. Follow us for the link when applications open.",
+      "Applications open after Info Night on Oct 7. Share your story, interests, and why you want to join TEK.",
   },
   {
     title: "Open Events",
@@ -33,25 +33,78 @@ export const recruitmentSteps = [
       "Invite-only events for applicants advancing past open recruitment. A closer look at TEK before decisions.",
   },
   {
-    title: "Interviews",
-    description:
-      "A conversation, not an interrogation. We want to know who you are.",
-  },
-  {
     title: "Offers",
     description:
       "If it's a mutual fit, you'll receive an invitation to join TEK.",
   },
 ];
 
-export const importantDates = [
-  { label: "Info Night", date: "Oct 7 · 6-7 PM · ILC (room TBA)" },
-  { label: "Applications Due", date: "TBA" },
-  { label: "Open Events", date: "TBA" },
-  { label: "Closed Events", date: "TBA" },
-  { label: "Interviews", date: "TBA" },
-  { label: "Offers Released", date: "TBA" },
-];
+export const importantDateGroups = [
+  {
+    title: "Kickoff",
+    items: [
+      {
+        date: "Oct 7",
+        title: "Info Night",
+        detail: "6-7 PM · ILC (room TBA)",
+      },
+      {
+        date: "Oct 7",
+        title: "Applications Open",
+        detail: "After Info Night",
+      },
+    ],
+  },
+  {
+    title: "Open events",
+    items: [
+      {
+        date: "Oct 13",
+        title: "Panel + Networking",
+        detail: "7-9 PM",
+        tag: "Open",
+      },
+      {
+        date: "Oct 13",
+        title: "Applications Due",
+        detail: "11:59 PM",
+        tag: "Deadline",
+      },
+      {
+        date: "Oct 15",
+        title: "Game Night",
+        detail: "7-9 PM",
+        tag: "Open",
+      },
+    ],
+  },
+  {
+    title: "Closed events",
+    items: [
+      {
+        date: "Oct 16",
+        title: "Closed event",
+        detail: "Time & location TBA",
+        tag: "Invite-only",
+      },
+      {
+        date: "Oct 17",
+        title: "Closed event",
+        detail: "Time & location TBA",
+        tag: "Invite-only",
+      },
+    ],
+  },
+  {
+    title: "Offers",
+    items: [
+      {
+        date: "Oct 18-24",
+        title: "Offers Released",
+      },
+    ],
+  },
+] as const;
 
 export const recruitmentFaqs = [
   {
@@ -72,7 +125,7 @@ export const recruitmentFaqs = [
   {
     question: "What does the application process look like?",
     answer:
-      "Apply, attend open events, then invite-only closed events and interviews. We designed it to be thoughtful - not stressful.",
+      "Apply, attend open events, then invite-only closed events. We designed it to be thoughtful - not stressful.",
   },
   {
     question: "What's the difference between open and closed events?",
@@ -82,7 +135,7 @@ export const recruitmentFaqs = [
   {
     question: "When does recruitment happen?",
     answer:
-      "We recruit primarily at the start of the fall semester, with opportunities in the spring depending on capacity. Exact dates will be announced soon.",
+      "Fall '26 Beta class recruitment runs in October. Info Night is Oct 7, applications are due Oct 13, and offers are released sometime during the week of Oct 18-24 - same time for everyone.",
   },
   {
     question: "Can I still attend events if I'm not a member?",

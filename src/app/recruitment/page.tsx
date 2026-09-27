@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import {
-  importantDates,
+  importantDateGroups,
   infoNight,
   recruitmentFaqs,
   recruitmentSteps,
@@ -27,42 +27,92 @@ export default function RecruitmentPage() {
       <PageHero
         eyebrow="Fall '26 · Beta Class"
         title="Join a community that invests in you"
-        description="Beta class recruitment releases soon. We look for curiosity, kindness, and a desire to build with others - not a perfect resume."
+        description="Applications open after Info Night on Oct 7. We look for curiosity, kindness, and a desire to build with others - not a perfect resume."
       />
 
       <section
         id="info-night"
-        className="scroll-mt-28 bg-background-warm py-16 sm:py-20"
+        className="scroll-mt-28 bg-background-warm py-10 sm:py-12"
       >
         <div className="container-page">
-          <SectionHeader
-            eyebrow="Next up"
-            title={infoNight.title}
-            description={infoNight.description}
-          />
-          <AnimatedReveal className="mt-10 max-w-xl rounded-2xl bg-card p-6 shadow-soft sm:p-8">
-            <p className="text-sm font-medium text-maroon">{infoNight.date}</p>
-            <p className="mt-3 text-base text-dark-neutral">
+          <AnimatedReveal className="max-w-2xl">
+            <p className="text-sm font-medium tracking-wide text-medium-blue uppercase">
+              Next up
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-dark-neutral sm:text-3xl">
+              {infoNight.title}
+            </h2>
+            <p className="mt-2 text-sm font-medium text-maroon">
+              {infoNight.date}
+              <span className="mx-2 text-border" aria-hidden>
+                ·
+              </span>
               {infoNight.time}
               <span className="mx-2 text-border" aria-hidden>
                 ·
               </span>
               {infoNight.location}
             </p>
-            <Button asChild size="lg" className="mt-6">
-              <Link href="/contact">Express interest</Link>
-            </Button>
+            <p className="mt-3 max-w-xl text-muted leading-relaxed">
+              {infoNight.description}
+            </p>
           </AnimatedReveal>
         </div>
       </section>
 
       <section className="py-16 sm:py-20">
         <div className="container-page">
+          <SectionHeader
+            eyebrow="Mark your calendar"
+            title="Important dates"
+            description="Open events are for everyone. Closed events are invite-only. Offers are released sometime during the week of Oct 18-24 - same time for everyone."
+          />
+          <div className="mt-12 max-w-2xl space-y-12">
+            {importantDateGroups.map((group, groupIndex) => (
+              <AnimatedReveal key={group.title} delay={groupIndex * 0.06}>
+                <h3 className="text-sm font-medium tracking-wide text-medium-blue uppercase">
+                  {group.title}
+                </h3>
+                <ul className="mt-4 divide-y divide-border border-y border-border">
+                  {group.items.map((item) => (
+                    <li
+                      key={`${group.title}-${item.date}-${item.title}`}
+                      className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:gap-8"
+                    >
+                      <p className="shrink-0 text-sm font-semibold text-maroon sm:w-28">
+                        {item.date}
+                      </p>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                          <p className="text-lg font-semibold tracking-tight text-dark-neutral">
+                            {item.title}
+                          </p>
+                          {"tag" in item ? (
+                            <span className="text-xs font-medium tracking-wide text-muted uppercase">
+                              {item.tag}
+                            </span>
+                          ) : null}
+                        </div>
+                        {"detail" in item ? (
+                          <p className="mt-0.5 text-sm text-muted">{item.detail}</p>
+                        ) : null}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </AnimatedReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-background-warm py-16 sm:py-20">
+        <div className="container-page">
           <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeader
               eyebrow="The process"
               title="How recruitment works"
-              description="Open events for anyone interested, then invite-only closed events - designed to help us get to know each other, not to stress you out."
+              description="Application, open events, closed events, then offers - designed to help us get to know each other, not to stress you out."
             />
             <Button asChild size="lg" className="shrink-0 self-start">
               <Link href="/contact">Express interest</Link>
@@ -70,30 +120,6 @@ export default function RecruitmentPage() {
           </div>
           <div className="mt-12 max-w-2xl">
             <Timeline items={recruitmentSteps} variant="process" />
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-background-warm py-16 sm:py-20">
-        <div className="container-page">
-          <SectionHeader
-            eyebrow="Mark your calendar"
-            title="Important dates"
-            description="Info night is locked in. Remaining recruitment dates will be announced soon."
-          />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {importantDates.map((item, index) => (
-              <AnimatedReveal
-                key={item.label}
-                delay={index * 0.05}
-                className="rounded-2xl bg-card p-6 shadow-soft"
-              >
-                <p className="text-sm font-medium text-maroon">{item.date}</p>
-                <p className="mt-2 text-lg font-semibold tracking-tight text-dark-neutral">
-                  {item.label}
-                </p>
-              </AnimatedReveal>
-            ))}
           </div>
         </div>
       </section>

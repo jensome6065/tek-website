@@ -38,7 +38,14 @@ export default function CommunityPage() {
               Upcoming
             </h2>
             <p className="mt-4 max-w-xl text-muted leading-relaxed">
-              Fall &apos;26 Beta class recruitment releases soon.
+              Fall &apos;26 Beta class recruitment events and dates live on the{" "}
+              <a
+                href="/recruitment"
+                className="font-medium text-maroon underline-offset-4 hover:underline"
+              >
+                Recruitment
+              </a>{" "}
+              page. More community events will be posted here soon.
             </p>
           </AnimatedReveal>
         </div>
