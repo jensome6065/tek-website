@@ -45,7 +45,17 @@ export function CTABanner({
                   size="lg"
                   className="bg-surface-inverse text-brand hover:bg-surface-inverse/90"
                 >
-                  <Link href={primaryHref}>{primaryLabel}</Link>
+                  {primaryHref.startsWith("http") ? (
+                    <a
+                      href={primaryHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {primaryLabel}
+                    </a>
+                  ) : (
+                    <Link href={primaryHref}>{primaryLabel}</Link>
+                  )}
                 </Button>
                 {secondaryLabel && secondaryHref && (
                   <Button

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import {
+  applicationFormUrl,
+  applicationsOpen,
   importantDateGroups,
-  infoNight,
   recruitmentFaqs,
   recruitmentSteps,
 } from "@/lib/data/recruitment";
@@ -12,12 +13,11 @@ import { FAQAccordion } from "@/components/shared/faq-accordion";
 import { AnimatedReveal } from "@/components/shared/animated-reveal";
 import { CTABanner } from "@/components/shared/cta-banner";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Recruitment",
   description:
-    "Join TEK at UMass Amherst. Learn about our recruitment process, important dates, and FAQ.",
+    "Join TEK at UMass Amherst. Applications are open for Fall '26. Learn about our recruitment process, important dates, and FAQ.",
   alternates: { canonical: "/recruitment" },
 };
 
@@ -27,35 +27,38 @@ export default function RecruitmentPage() {
       <PageHero
         eyebrow="Fall '26 · Beta Class"
         title="Join a community that invests in you"
-        description="Applications open after Info Night on Oct 7. We look for curiosity, kindness, and a desire to build with others - not a perfect resume."
+        description="Applications are open through Oct 13. We look for curiosity, kindness, and a desire to build with others - not a perfect resume."
       />
 
       <section
-        id="info-night"
+        id="apply"
         className="scroll-mt-28 bg-background-warm py-10 sm:py-12"
       >
         <div className="container-page">
           <AnimatedReveal className="max-w-2xl">
             <p className="text-sm font-medium tracking-wide text-medium-blue uppercase">
-              Next up
+              Now open
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-dark-neutral sm:text-3xl">
-              {infoNight.title}
+              {applicationsOpen.title}
             </h2>
             <p className="mt-2 text-sm font-medium text-maroon">
-              {infoNight.date}
-              <span className="mx-2 text-border" aria-hidden>
-                ·
-              </span>
-              {infoNight.time}
-              <span className="mx-2 text-border" aria-hidden>
-                ·
-              </span>
-              {infoNight.location}
+              Due {applicationsOpen.deadline}
             </p>
             <p className="mt-3 max-w-xl text-muted leading-relaxed">
-              {infoNight.description}
+              {applicationsOpen.description}
             </p>
+            <div className="mt-6">
+              <Button asChild size="lg">
+                <a
+                  href={applicationFormUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apply now
+                </a>
+              </Button>
+            </div>
           </AnimatedReveal>
         </div>
       </section>
@@ -115,7 +118,13 @@ export default function RecruitmentPage() {
               description="Application, open events, closed events, then offers - designed to help us get to know each other, not to stress you out."
             />
             <Button asChild size="lg" className="shrink-0 self-start">
-              <Link href="/contact">Express interest</Link>
+              <a
+                href={applicationFormUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Apply now
+              </a>
             </Button>
           </div>
           <div className="mt-12 max-w-2xl">
@@ -138,9 +147,9 @@ export default function RecruitmentPage() {
 
       <CTABanner
         title="Ready when you are"
-        description="Start with an interest form or reach out - we'd love to hear from you."
-        primaryLabel="Get in touch"
-        primaryHref="/contact"
+        description="Applications are open through Oct 13. We'd love to hear from you."
+        primaryLabel="Apply now"
+        primaryHref={applicationFormUrl}
         secondaryLabel="Explore community"
         secondaryHref="/community"
       />

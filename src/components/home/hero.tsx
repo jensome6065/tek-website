@@ -74,8 +74,10 @@ export function Hero() {
 
           {recruitmentSignal.active ? (
             <div className="mt-8">
-              <Link
+              <a
                 href={recruitmentSignal.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex min-h-11 flex-wrap items-center gap-x-2.5 py-2 text-sm text-white/90 transition-colors hover:text-white"
               >
                 <span className="relative flex h-2 w-2 shrink-0" aria-hidden>
@@ -89,7 +91,7 @@ export function Hero() {
                   ·
                 </span>
                 <span>{recruitmentSignal.detail}</span>
-              </Link>
+              </a>
             </div>
           ) : null}
         </div>

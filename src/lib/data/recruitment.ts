@@ -1,26 +1,27 @@
+/** Google Form for Fall '26 applications. */
+export const applicationFormUrl = "https://forms.gle/BARyDP2XtEstGxH49";
+
 /** Hero live line - set `active: false` to hide it. */
 export const recruitmentSignal = {
   active: true,
-  label: "Info night",
-  detail: "Wed Oct 7, 6-7 PM · ILC",
-  href: "/recruitment#info-night",
-  cta: "Learn more",
+  label: "Applications open",
+  detail: "Due Oct 13, 11:59 PM",
+  href: applicationFormUrl,
+  cta: "Apply now",
 } as const;
 
-export const infoNight = {
-  title: "Info Night",
-  date: "Wednesday, October 7, 2026",
-  time: "6-7 PM",
-  location: "ILC (room TBA)",
+export const applicationsOpen = {
+  title: "Applications are open",
+  deadline: "Monday, October 13 · 11:59 PM",
   description:
-    "Meet members, learn about Fall '26 recruitment, and ask anything about TEK. Applications open right after Info Night.",
+    "Share your story, interests, and why you want to join TEK. Attend open events while you apply - applications are due Oct 13.",
 } as const;
 
 export const recruitmentSteps = [
   {
     title: "Application",
     description:
-      "Applications open after Info Night on Oct 7. Share your story, interests, and why you want to join TEK.",
+      "Applications are open through Oct 13 at 11:59 PM. Share your story, interests, and why you want to join TEK.",
   },
   {
     title: "Open Events",
@@ -46,12 +47,12 @@ export const importantDateGroups = [
       {
         date: "Oct 7",
         title: "Info Night",
-        detail: "6-7 PM · ILC (room TBA)",
+        detail: "6-7 PM · ILC",
       },
       {
         date: "Oct 7",
         title: "Applications Open",
-        detail: "After Info Night",
+        detail: "Now open · Due Oct 13",
       },
     ],
   },
@@ -135,7 +136,7 @@ export const recruitmentFaqs = [
   {
     question: "When does recruitment happen?",
     answer:
-      "Fall '26 Beta class recruitment runs in October. Info Night is Oct 7, applications are due Oct 13, and offers are released sometime during the week of Oct 18-24 - same time for everyone.",
+      "Fall '26 Beta class recruitment runs in October. Applications are open now and due Oct 13. Offers are released sometime during the week of Oct 18-24 - same time for everyone.",
   },
   {
     question: "Can I still attend events if I'm not a member?",
